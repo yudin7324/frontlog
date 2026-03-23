@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "study": "Study",
+    "dashboard": "Dashboard",
+    "categories": "Topics",
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  },
+  "home": {
+    "title": "Prepare for interviews the smart way",
+    "subtitle": "Spaced repetition flashcard system for frontend developers",
+    "cta": "Get started for free",
+    "features": {
+      "spaced": {
+        "title": "Spaced Repetition",
+        "desc": "SM-2 algorithm shows cards exactly when you're about to forget them"
+      },
+      "topics": {
+        "title": "All Frontend Topics",
+        "desc": "HTML, CSS, JavaScript, TypeScript, React, Next.js and algorithms"
+      },
+      "progress": {
+        "title": "Track Your Progress",
+        "desc": "Watch your confidence grow day by day"
+      }
+    }
+  },
+  "study": {
+    "question": "Question",
+    "showAnswer": "Show Answer",
+    "howWell": "How well did you know the answer?",
+    "again": "Again",
+    "hard": "Hard",
+    "good": "Good",
+    "easy": "Easy",
+    "againHint": "Forgot completely",
+    "hardHint": "Recalled with difficulty",
+    "goodHint": "Recalled correctly",
+    "easyHint": "Recalled effortlessly",
+    "noCards": "No cards due for review",
+    "noCardsDesc": "Great work! Come back tomorrow.",
+    "done": "Done for today!",
+    "cardsLeft": "left",
+    "newCard": "New",
+    "learningCard": "Learning",
+    "reviewCard": "Review"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "dueToday": "Due Today",
+    "totalLearned": "Cards Learned",
+    "streak": "Day Streak",
+    "categories": "Topics",
+    "startStudy": "Start Studying",
+    "allCaughtUp": "All caught up!",
+    "days": "days"
+  },
+  "categories": {
+    "title": "Topics",
+    "cards": "cards",
+    "study": "Study",
+    "progress": "progress"
+  },
+  "auth": {
+    "signInTitle": "Sign in to FrontLog",
+    "signInSubtitle": "Track your progress and learn more effectively",
+    "continueWithGitHub": "Continue with GitHub",
+    "continueWithGoogle": "Continue with Google",
+    "terms": "By continuing, you agree to our Terms of Service"
+  }
+}

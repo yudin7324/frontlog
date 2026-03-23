@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "study": "Учить",
+    "dashboard": "Дашборд",
+    "categories": "Темы",
+    "signIn": "Войти",
+    "signOut": "Выйти"
+  },
+  "home": {
+    "title": "Готовься к собеседованию по-умному",
+    "subtitle": "Flashcard-система с интервальным повторением для frontend-разработчиков",
+    "cta": "Начать бесплатно",
+    "features": {
+      "spaced": {
+        "title": "Интервальное повторение",
+        "desc": "Алгоритм SM-2 показывает карточки именно тогда, когда ты готов их забыть"
+      },
+      "topics": {
+        "title": "Все темы фронтенда",
+        "desc": "HTML, CSS, JavaScript, TypeScript, React, Next.js и алгоритмы"
+      },
+      "progress": {
+        "title": "Отслеживай прогресс",
+        "desc": "Видь как растёт твоя уверенность день за днём"
+      }
+    }
+  },
+  "study": {
+    "question": "Вопрос",
+    "showAnswer": "Показать ответ",
+    "howWell": "Насколько хорошо ты знал ответ?",
+    "again": "Снова",
+    "hard": "Сложно",
+    "good": "Хорошо",
+    "easy": "Легко",
+    "againHint": "Не вспомнил",
+    "hardHint": "Вспомнил с трудом",
+    "goodHint": "Вспомнил правильно",
+    "easyHint": "Вспомнил легко",
+    "noCards": "Нет карточек для повторения",
+    "noCardsDesc": "Отличная работа! Возвращайся завтра.",
+    "done": "Готово на сегодня!",
+    "cardsLeft": "осталось",
+    "newCard": "Новая",
+    "learningCard": "Изучение",
+    "reviewCard": "Повторение"
+  },
+  "dashboard": {
+    "title": "Дашборд",
+    "dueToday": "Сегодня к повторению",
+    "totalLearned": "Изучено карточек",
+    "streak": "Серия дней",
+    "categories": "Темы",
+    "startStudy": "Начать занятие",
+    "allCaughtUp": "Всё повторено!",
+    "days": "дн."
+  },
+  "categories": {
+    "title": "Темы",
+    "cards": "карточек",
+    "study": "Учить",
+    "progress": "прогресс"
+  },
+  "auth": {
+    "signInTitle": "Войти в FrontLog",
+    "signInSubtitle": "Отслеживай прогресс и учись эффективнее",
+    "continueWithGitHub": "Продолжить с GitHub",
+    "continueWithGoogle": "Продолжить с Google",
+    "terms": "Продолжая, вы соглашаетесь с условиями использования"
+  }
+}
