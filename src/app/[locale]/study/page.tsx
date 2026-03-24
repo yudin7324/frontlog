@@ -8,6 +8,7 @@ import { buttonVariants } from '@/lib/button-variants';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import type { Card, Category } from '@prisma/client';
+import { getTranslations } from 'next-intl/server';
 
 type CardWithCategory = Card & { category: Category };
 
@@ -20,12 +21,13 @@ export default async function StudyPage({
 }) {
   const { locale } = await params;
   const { category } = await searchParams;
-const session = await auth();
-  const isRu = locale === 'ru';
+  const session = await auth();
+  const t = await getTranslations('study');
 
   const now = new Date();
   let dueCards: CardWithCategory[] = [];
   let categoryName: string | null = null;
+  const isRu = locale === 'ru';
 
   const categoryFilter = category ? { category: { slug: category } } : {};
 
@@ -77,17 +79,10 @@ const session = await auth();
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold mb-2">
-              {isRu ? 'Отличная работа!' : 'Great job!'}
-            </h2>
-            <p className="text-muted-foreground mb-6">
-              {isRu ? 'Нет карточек для повторения. Возвращайся завтра!' : 'No cards due for review. Come back tomorrow!'}
-            </p>
-            <Link
-              href={`/${locale}/dashboard`}
-              className={cn(buttonVariants())}
-            >
-              {isRu ? 'На дашборд' : 'Go to Dashboard'}
+            <h2 className="text-2xl font-bold mb-2">{t('greatJob')}</h2>
+            <p className="text-muted-foreground mb-6">{t('noCardsDue')}</p>
+            <Link href={`/${locale}/dashboard`} className={cn(buttonVariants())}>
+              {t('toDashboard')}
             </Link>
           </div>
         </main>
@@ -102,7 +97,7 @@ const session = await auth();
         {categoryName && (
           <h1 className="text-xl font-semibold mb-6">{categoryName}</h1>
         )}
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>...</div>}>
           <StudySession
             initialCards={dueCards}
             userId={session?.user?.id ?? null}

@@ -4,26 +4,49 @@
     "dashboard": "Dashboard",
     "categories": "Topics",
     "signIn": "Sign In",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System"
   },
   "home": {
-    "title": "Prepare for interviews the smart way",
-    "subtitle": "Spaced repetition flashcard system for frontend developers",
-    "cta": "Get started for free",
-    "features": {
-      "spaced": {
-        "title": "Spaced Repetition",
-        "desc": "SM-2 algorithm shows cards exactly when you're about to forget them"
-      },
-      "topics": {
-        "title": "All Frontend Topics",
-        "desc": "HTML, CSS, JavaScript, TypeScript, React, Next.js and algorithms"
-      },
-      "progress": {
-        "title": "Track Your Progress",
-        "desc": "Watch your confidence grow day by day"
-      }
-    }
+    "beta": "open beta",
+    "heroTitle1": "Prepare for interviews",
+    "heroTitle2": "the smart way",
+    "heroSubtitle": "Spaced repetition flashcard system for frontend developers. Study only what you're about to forget.",
+    "tryButton": "Try without signup",
+    "feature1Title": "Spaced Repetition",
+    "feature1Desc": "SM-2 algorithm shows cards exactly when you're about to forget them",
+    "feature2Title": "All Frontend Topics",
+    "feature2Desc": "HTML, CSS, JavaScript, TypeScript, React, Next.js and algorithms",
+    "feature3Title": "Track Progress",
+    "feature3Desc": "Watch your confidence grow day by day",
+    "topicsTitle": "Topics to study",
+    "footerText": "Frontend interview prep"
+  },
+  "categories": {
+    "title": "Topics",
+    "subtitle": "Choose a topic to view all questions",
+    "progress": "Progress",
+    "open": "Open →"
+  },
+  "category": {
+    "back": "All topics",
+    "questions": "questions",
+    "learned": "learned",
+    "review": "Review",
+    "difficultyEasy": "Easy",
+    "difficultyMedium": "Medium",
+    "difficultyHard": "Hard",
+    "statusNew": "New",
+    "statusLearning": "Learning",
+    "statusDue": "Due",
+    "statusLearned": "Learned",
+    "dueDateNow": "Now",
+    "dueDateTomorrow": "Tomorrow",
+    "dueDateDays": "In {n}d",
+    "dueDateWeeks": "In {n}w",
+    "dueDateMonths": "In {n}mo"
   },
   "study": {
     "question": "Question",
@@ -43,23 +66,47 @@
     "cardsLeft": "left",
     "newCard": "New",
     "learningCard": "Learning",
-    "reviewCard": "Review"
+    "reviewCard": "Review",
+    "greatJob": "Great job!",
+    "noCardsDue": "No cards due for review. Come back tomorrow!",
+    "toDashboard": "Go to Dashboard",
+    "sessionComplete": "Session complete!",
+    "reviewedCards": "Cards reviewed: {count}",
+    "tryAgain": "Again",
+    "dashboard": "Dashboard"
   },
   "dashboard": {
     "title": "Dashboard",
-    "dueToday": "Due Today",
+    "greeting": "Good day, {name}!",
+    "dueCardsToday": "You have {count} cards today",
+    "allCaughtUpToday": "All caught up for today!",
+    "review": "Review",
+    "dueToday": "Due today",
+    "learned": "Learned",
+    "newCards": "New cards",
+    "topics": "Topics",
+    "progress": "Progress",
+    "questions": "questions",
+    "learnedCount": "learned",
     "totalLearned": "Cards Learned",
     "streak": "Day Streak",
-    "categories": "Topics",
     "startStudy": "Start Studying",
     "allCaughtUp": "All caught up!",
     "days": "days"
   },
-  "categories": {
-    "title": "Topics",
-    "cards": "cards",
-    "study": "Study",
-    "progress": "progress"
+  "heatmap": {
+    "reviewsInYear": "reviews in the last year",
+    "daysLabel": "Days",
+    "streakLabel": "Streak",
+    "less": "Less",
+    "more": "More"
+  },
+  "stats": {
+    "byDifficulty": "By difficulty",
+    "byTopic": "By topic",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard"
   },
   "auth": {
     "signInTitle": "Sign in to FrontLog",

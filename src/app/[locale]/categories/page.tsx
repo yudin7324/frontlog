@@ -7,6 +7,19 @@ import { buttonVariants } from '@/lib/button-variants';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { BookOpen, CheckCircle2 } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
+
+type CategoryWithProgress = {
+  id: string;
+  slug: string;
+  nameRu: string;
+  nameEn: string;
+  descriptionRu: string | null;
+  descriptionEn: string | null;
+  cards: {
+    progress: { repetitions: number }[];
+  }[];
+};
 
 export default async function CategoriesPage({
   params,
@@ -15,27 +28,26 @@ export default async function CategoriesPage({
 }) {
   const { locale } = await params;
   const session = await auth();
-  const isRu = locale === 'ru';
   const userId = session?.user?.id;
+  const t = await getTranslations('categories');
+  const isRu = locale === 'ru';
 
   const categories = await prisma.category.findMany({
     include: {
       cards: {
         where: { isPublished: true },
-        include: { progress: userId ? { where: { userId } } : false },
+        include: { progress: { where: { userId: userId ?? '' } } },
       },
     },
     orderBy: { order: 'asc' },
-  });
+  }) as unknown as CategoryWithProgress[];
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar user={session?.user} />
       <main className="flex-1 container mx-auto max-w-6xl px-4 py-8">
-        <h1 className="text-2xl font-bold mb-2">{isRu ? 'Темы' : 'Topics'}</h1>
-        <p className="text-muted-foreground mb-8">
-          {isRu ? 'Выбери тему чтобы посмотреть все вопросы' : 'Choose a topic to view all questions'}
-        </p>
+        <h1 className="text-2xl font-bold mb-2">{t('title')}</h1>
+        <p className="text-muted-foreground mb-8">{t('subtitle')}</p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {categories.map((cat) => {
@@ -62,7 +74,7 @@ export default async function CategoriesPage({
                     </div>
 
                     <div className="flex items-center justify-between text-xs mb-1">
-                      <span className="text-muted-foreground">{isRu ? 'Прогресс' : 'Progress'}</span>
+                      <span className="text-muted-foreground">{t('progress')}</span>
                       <span className="font-semibold">{progressPct}%</span>
                     </div>
                     <div className="w-full bg-secondary rounded-full h-1.5 mb-4">
@@ -86,7 +98,7 @@ export default async function CategoriesPage({
                         )}
                       </div>
                       <span className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'text-xs pointer-events-none')}>
-                        {isRu ? 'Открыть →' : 'Open →'}
+                        {t('open')}
                       </span>
                     </div>
                   </CardContent>

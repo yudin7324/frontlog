@@ -1,4 +1,5 @@
 import { CategoryIcon } from '@/components/ui/category-icon';
+import { getTranslations } from 'next-intl/server';
 
 interface CategoryStat {
   slug: string;
@@ -13,12 +14,13 @@ interface CategoryStatsProps {
   locale: string;
 }
 
-export function CategoryStats({ categories, locale }: CategoryStatsProps) {
+export async function CategoryStats({ categories, locale }: CategoryStatsProps) {
+  const t = await getTranslations('stats');
   const isRu = locale === 'ru';
 
   return (
     <div className="border rounded-xl p-5 h-full flex flex-col">
-      <h3 className="font-semibold mb-4">{isRu ? 'По темам' : 'By topic'}</h3>
+      <h3 className="font-semibold mb-4">{t('byTopic')}</h3>
       <div className="space-y-3 flex-1">
         {categories.map((cat) => {
           const pct = cat.total > 0 ? Math.round((cat.learned / cat.total) * 100) : 0;

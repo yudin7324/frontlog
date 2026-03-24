@@ -4,26 +4,49 @@
     "dashboard": "Дашборд",
     "categories": "Темы",
     "signIn": "Войти",
-    "signOut": "Выйти"
+    "signOut": "Выйти",
+    "themeLight": "Светлая",
+    "themeDark": "Тёмная",
+    "themeSystem": "Системная"
   },
   "home": {
-    "title": "Готовься к собеседованию по-умному",
-    "subtitle": "Flashcard-система с интервальным повторением для frontend-разработчиков",
-    "cta": "Начать бесплатно",
-    "features": {
-      "spaced": {
-        "title": "Интервальное повторение",
-        "desc": "Алгоритм SM-2 показывает карточки именно тогда, когда ты готов их забыть"
-      },
-      "topics": {
-        "title": "Все темы фронтенда",
-        "desc": "HTML, CSS, JavaScript, TypeScript, React, Next.js и алгоритмы"
-      },
-      "progress": {
-        "title": "Отслеживай прогресс",
-        "desc": "Видь как растёт твоя уверенность день за днём"
-      }
-    }
+    "beta": "открытый бета-доступ",
+    "heroTitle1": "Готовься к собеседованию",
+    "heroTitle2": "по-умному",
+    "heroSubtitle": "Flashcard-система с интервальным повторением для frontend-разработчиков. Учи только то, что готов забыть.",
+    "tryButton": "Попробовать без регистрации",
+    "feature1Title": "Интервальное повторение",
+    "feature1Desc": "Алгоритм SM-2 показывает карточки именно тогда, когда ты готов их забыть",
+    "feature2Title": "Все темы фронтенда",
+    "feature2Desc": "HTML, CSS, JavaScript, TypeScript, React, Next.js и алгоритмы",
+    "feature3Title": "Отслеживай прогресс",
+    "feature3Desc": "Видь как растёт твоя уверенность день за днём",
+    "topicsTitle": "Темы для изучения",
+    "footerText": "Подготовка к frontend-собеседованиям"
+  },
+  "categories": {
+    "title": "Темы",
+    "subtitle": "Выбери тему чтобы посмотреть все вопросы",
+    "progress": "Прогресс",
+    "open": "Открыть →"
+  },
+  "category": {
+    "back": "Все темы",
+    "questions": "вопросов",
+    "learned": "изучено",
+    "review": "Повторить",
+    "difficultyEasy": "Легко",
+    "difficultyMedium": "Средне",
+    "difficultyHard": "Сложно",
+    "statusNew": "Новая",
+    "statusLearning": "Изучается",
+    "statusDue": "К повторению",
+    "statusLearned": "Изучено",
+    "dueDateNow": "Сейчас",
+    "dueDateTomorrow": "Завтра",
+    "dueDateDays": "Через {n} дн.",
+    "dueDateWeeks": "Через {n} нед.",
+    "dueDateMonths": "Через {n} мес."
   },
   "study": {
     "question": "Вопрос",
@@ -43,23 +66,47 @@
     "cardsLeft": "осталось",
     "newCard": "Новая",
     "learningCard": "Изучение",
-    "reviewCard": "Повторение"
+    "reviewCard": "Повторение",
+    "greatJob": "Отличная работа!",
+    "noCardsDue": "Нет карточек для повторения. Возвращайся завтра!",
+    "toDashboard": "На дашборд",
+    "sessionComplete": "Сессия завершена!",
+    "reviewedCards": "Повторено карточек: {count}",
+    "tryAgain": "Ещё раз",
+    "dashboard": "На дашборд"
   },
   "dashboard": {
     "title": "Дашборд",
-    "dueToday": "Сегодня к повторению",
+    "greeting": "Добрый день, {name}!",
+    "dueCardsToday": "У тебя {count} карточек на сегодня",
+    "allCaughtUpToday": "Всё повторено на сегодня!",
+    "review": "Повторить",
+    "dueToday": "На сегодня",
+    "learned": "Изучено",
+    "newCards": "Новых карточек",
+    "topics": "Темы",
+    "progress": "Прогресс",
+    "questions": "вопросов",
+    "learnedCount": "изучено",
     "totalLearned": "Изучено карточек",
     "streak": "Серия дней",
-    "categories": "Темы",
     "startStudy": "Начать занятие",
     "allCaughtUp": "Всё повторено!",
     "days": "дн."
   },
-  "categories": {
-    "title": "Темы",
-    "cards": "карточек",
-    "study": "Учить",
-    "progress": "прогресс"
+  "heatmap": {
+    "reviewsInYear": "повторений за год",
+    "daysLabel": "Дней",
+    "streakLabel": "Серия",
+    "less": "Меньше",
+    "more": "Больше"
+  },
+  "stats": {
+    "byDifficulty": "По сложности",
+    "byTopic": "По темам",
+    "easy": "Лёгкие",
+    "medium": "Средние",
+    "hard": "Сложные"
   },
   "auth": {
     "signInTitle": "Войти в FrontLog",

@@ -1,11 +1,12 @@
 import { cn } from '@/lib/utils';
+import { getTranslations } from 'next-intl/server';
 
 type DifficultyKey = 'EASY' | 'MEDIUM' | 'HARD';
 
-const CONFIG: Record<DifficultyKey, { en: string; ru: string; bar: string; text: string }> = {
-  EASY:   { en: 'Easy',   ru: 'Лёгкие',  bar: 'bg-emerald-500', text: 'text-emerald-600 dark:text-emerald-400' },
-  MEDIUM: { en: 'Medium', ru: 'Средние', bar: 'bg-amber-500',   text: 'text-amber-600 dark:text-amber-400' },
-  HARD:   { en: 'Hard',   ru: 'Сложные', bar: 'bg-rose-500',    text: 'text-rose-600 dark:text-rose-400' },
+const CONFIG: Record<DifficultyKey, { bar: string; text: string }> = {
+  EASY:   { bar: 'bg-emerald-500', text: 'text-emerald-600 dark:text-emerald-400' },
+  MEDIUM: { bar: 'bg-amber-500',   text: 'text-amber-600 dark:text-amber-400' },
+  HARD:   { bar: 'bg-rose-500',    text: 'text-rose-600 dark:text-rose-400' },
 };
 
 interface DifficultyStatsProps {
@@ -13,12 +14,18 @@ interface DifficultyStatsProps {
   locale: string;
 }
 
-export function DifficultyStats({ stats, locale }: DifficultyStatsProps) {
-  const isRu = locale === 'ru';
+export async function DifficultyStats({ stats }: DifficultyStatsProps) {
+  const t = await getTranslations('stats');
+
+  const labels: Record<DifficultyKey, string> = {
+    EASY:   t('easy'),
+    MEDIUM: t('medium'),
+    HARD:   t('hard'),
+  };
 
   return (
     <div className="border rounded-xl p-5">
-      <h3 className="font-semibold mb-4">{isRu ? 'По сложности' : 'By difficulty'}</h3>
+      <h3 className="font-semibold mb-4">{t('byDifficulty')}</h3>
       <div className="space-y-4">
         {(Object.keys(CONFIG) as DifficultyKey[]).map((key) => {
           const { total, learned } = stats[key];
@@ -28,7 +35,7 @@ export function DifficultyStats({ stats, locale }: DifficultyStatsProps) {
           return (
             <div key={key}>
               <div className="flex items-center justify-between text-sm mb-1.5">
-                <span className={cn('font-medium', cfg.text)}>{isRu ? cfg.ru : cfg.en}</span>
+                <span className={cn('font-medium', cfg.text)}>{labels[key]}</span>
                 <span className="text-muted-foreground tabular-nums">
                   {learned}
                   <span className="text-muted-foreground/50"> /{total}</span>
