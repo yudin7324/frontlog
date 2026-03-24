@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
-import { Moon, Sun, Menu, BookOpen } from 'lucide-react';
+import { Moon, Sun, Menu, BookOpen, Settings } from 'lucide-react';
 import { buttonVariants } from '@/lib/button-variants';
 
 import {
@@ -92,6 +92,12 @@ export function Navbar({ user }: NavbarProps) {
                 <div className="px-2 py-1.5 text-sm text-muted-foreground">
                   {user.email}
                 </div>
+                <DropdownMenuItem>
+                  <Link href={`/${locale}/settings`} className="flex items-center gap-2 w-full">
+                    <Settings className="h-4 w-4" />
+                    {t('settings')}
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => signOut()}>
                   {t('signOut')}
                 </DropdownMenuItem>

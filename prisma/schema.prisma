@@ -20,8 +20,27 @@ model User {
   sessions      Session[]
   cardProgress  CardProgress[]
   studySessions StudySession[]
+  settings      UserSettings?
 
   @@map("users")
+}
+
+model UserSettings {
+  id            String  @id @default(cuid())
+  userId        String  @unique
+  dailyNewCards Int     @default(10)
+  dailyReviews  Int     @default(50)
+
+  // SM-2 initial intervals (days)
+  intervalAgain Int     @default(1)
+  intervalGood1 Int     @default(1)   // first Good rep
+  intervalGood2 Int     @default(6)   // second Good rep
+  intervalEasy1 Int     @default(4)   // first Easy rep
+  intervalEasy2 Int     @default(8)   // second Easy rep
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
 }
 
 model Account {

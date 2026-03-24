@@ -23,13 +23,29 @@ export interface SM2Result extends SM2State {
 
 const MIN_EASE_FACTOR = 1.3;
 
-export function calculateSM2(state: SM2State, rating: Rating): SM2Result {
+export interface SM2Intervals {
+  intervalAgain?: number;
+  intervalGood1?: number;
+  intervalGood2?: number;
+  intervalEasy1?: number;
+  intervalEasy2?: number;
+}
+
+export function calculateSM2(state: SM2State, rating: Rating, intervals: SM2Intervals = {}): SM2Result {
   let { easeFactor, interval, repetitions } = state;
+
+  const {
+    intervalAgain = 1,
+    intervalGood1 = 1,
+    intervalGood2 = 6,
+    intervalEasy1 = 4,
+    intervalEasy2 = 8,
+  } = intervals;
 
   if (rating === 0) {
     // Again: reset to beginning
     repetitions = 0;
-    interval = 1;
+    interval = intervalAgain;
   } else if (rating === 1) {
     // Hard: repeat soon, decrease EF
     repetitions = Math.max(0, repetitions - 1);
@@ -38,9 +54,9 @@ export function calculateSM2(state: SM2State, rating: Rating): SM2Result {
   } else if (rating === 2) {
     // Good: normal progression
     if (repetitions === 0) {
-      interval = 1;
+      interval = intervalGood1;
     } else if (repetitions === 1) {
-      interval = 6;
+      interval = intervalGood2;
     } else {
       interval = Math.round(interval * easeFactor);
     }
@@ -48,9 +64,9 @@ export function calculateSM2(state: SM2State, rating: Rating): SM2Result {
   } else {
     // Easy: fast progression, increase EF
     if (repetitions === 0) {
-      interval = 4;
+      interval = intervalEasy1;
     } else if (repetitions === 1) {
-      interval = 8;
+      interval = intervalEasy2;
     } else {
       interval = Math.round(interval * easeFactor * 1.3);
     }

@@ -12,15 +12,19 @@ export async function POST(req: NextRequest) {
   const { cardId, rating } = await req.json();
   const userId = session.user.id;
 
-  const existing = await prisma.cardProgress.findUnique({
-    where: { userId_cardId: { userId, cardId } },
-  });
+  const [existing, userSettings] = await Promise.all([
+    prisma.cardProgress.findUnique({ where: { userId_cardId: { userId, cardId } } }),
+    prisma.userSettings.findUnique({
+      where: { userId },
+      select: { intervalAgain: true, intervalGood1: true, intervalGood2: true, intervalEasy1: true, intervalEasy2: true },
+    }),
+  ]);
 
   const currentState = existing
     ? { easeFactor: existing.easeFactor, interval: existing.interval, repetitions: existing.repetitions }
     : { easeFactor: 2.5, interval: 0, repetitions: 0 };
 
-  const result = calculateSM2(currentState, rating as Rating);
+  const result = calculateSM2(currentState, rating as Rating, userSettings ?? {});
 
   const progress = await prisma.cardProgress.upsert({
     where: { userId_cardId: { userId, cardId } },

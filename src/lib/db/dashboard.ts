@@ -6,6 +6,12 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
   const now = new Date();
   const yearAgo = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
 
+  const userSettings = await prisma.userSettings.findUnique({
+    where: { userId },
+    select: { dailyNewCards: true },
+  });
+  const dailyNewCardsLimit = userSettings?.dailyNewCards ?? 10;
+
   const [dueCount, totalLearned, rawCategoryStats, activityRaw] = await Promise.all([
     prisma.cardProgress.count({ where: { userId, dueDate: { lte: now } } }),
     prisma.cardProgress.count({ where: { userId, repetitions: { gt: 0 } } }),
@@ -34,7 +40,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     where: { isPublished: true, id: { notIn: learnedCardIds } },
   });
 
-  const totalDue = dueCount + Math.min(newCardsCount, 10);
+  const totalDue = dueCount + Math.min(newCardsCount, dailyNewCardsLimit);
 
   // Heatmap
   const dayMap = new Map<string, number>();

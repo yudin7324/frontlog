@@ -5,10 +5,10 @@ type Day = { date: string; count: number };
 
 function cellColor(count: number) {
   if (count === 0) return 'bg-muted';
-  if (count <= 2)  return 'bg-primary/20';
-  if (count <= 5)  return 'bg-primary/45';
-  if (count <= 9)  return 'bg-primary/70';
-  return 'bg-primary';
+  if (count <= 2)  return 'bg-green-200 dark:bg-green-900';
+  if (count <= 5)  return 'bg-green-400 dark:bg-green-700';
+  if (count <= 9)  return 'bg-green-600 dark:bg-green-500';
+  return 'bg-green-800 dark:bg-green-400';
 }
 
 function buildGrid(data: Day[]): (Day | null)[][] {
@@ -85,7 +85,7 @@ export async function ActivityHeatmap({ data, locale, totalDays, streak }: Activ
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto flex justify-center">
         <div className="inline-flex gap-2">
           <div className="flex flex-col gap-[3px] mt-[18px]">
             {DAY_LABELS.map((label, i) => (
@@ -96,10 +96,14 @@ export async function ActivityHeatmap({ data, locale, totalDays, streak }: Activ
           </div>
 
           <div className="flex flex-col gap-1">
-            <div className="flex gap-[3px]">
+            <div className="relative h-[14px] flex gap-[3px]">
               {weeks.map((_, wi) => (
-                <div key={wi} className="w-[11px] text-[10px] text-muted-foreground leading-none">
-                  {monthLabels[wi] ?? ''}
+                <div key={wi} className="relative w-[11px] shrink-0">
+                  {monthLabels[wi] && (
+                    <span className="absolute left-0 top-0 text-[10px] text-muted-foreground leading-none whitespace-nowrap">
+                      {monthLabels[wi]}
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
@@ -127,7 +131,7 @@ export async function ActivityHeatmap({ data, locale, totalDays, streak }: Activ
 
       <div className="flex items-center gap-1 justify-end mt-3 text-[10px] text-muted-foreground">
         <span>{t('less')}</span>
-        {['bg-muted','bg-primary/20','bg-primary/45','bg-primary/70','bg-primary'].map((c, i) => (
+        {['bg-muted','bg-green-200 dark:bg-green-900','bg-green-400 dark:bg-green-700','bg-green-600 dark:bg-green-500','bg-green-800 dark:bg-green-400'].map((c, i) => (
           <div key={i} className={cn('w-[11px] h-[11px] rounded-[2px]', c)} />
         ))}
         <span>{t('more')}</span>

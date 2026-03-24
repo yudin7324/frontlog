@@ -35,27 +35,6 @@ export default async function CategoryPage({
     ? category.cards.filter((c: CardItem) => c.progress.some((p: ProgressItem) => p.repetitions > 0)).length
     : 0;
 
-  const difficultyLabel: Record<string, string> = {
-    EASY:   t('difficultyEasy'),
-    MEDIUM: t('difficultyMedium'),
-    HARD:   t('difficultyHard'),
-  };
-
-  const statusLabels = {
-    new:      t('statusNew'),
-    learning: t('statusLearning'),
-    due:      t('statusDue'),
-    learned:  t('statusLearned'),
-  };
-
-  const dateLabels = {
-    now:      t('dueDateNow'),
-    tomorrow: t('dueDateTomorrow'),
-    days:     (n: number) => t('dueDateDays', { n }),
-    weeks:    (n: number) => t('dueDateWeeks', { n }),
-    months:   (n: number) => t('dueDateMonths', { n }),
-  };
-
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar user={session?.user} />
@@ -98,11 +77,7 @@ export default async function CategoryPage({
 
         <CardList
           cards={category.cards}
-          locale={locale}
           now={now}
-          difficultyLabel={difficultyLabel}
-          statusLabels={statusLabels}
-          dateLabels={dateLabels}
         />
       </main>
     </div>

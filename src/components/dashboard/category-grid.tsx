@@ -8,11 +8,22 @@ import type { Card as PrismaCard, CardProgress } from '@prisma/client';
 import { getTranslations } from 'next-intl/server';
 
 const CATEGORY_BG: Record<string, string> = {
-  javascript: 'bg-yellow-400/10 dark:bg-yellow-400/5',
-  typescript: 'bg-blue-500/10 dark:bg-blue-500/5',
-  react:      'bg-cyan-400/10 dark:bg-cyan-400/5',
-  css:        'bg-orange-400/10 dark:bg-orange-400/5',
-  browser:    'bg-emerald-400/10 dark:bg-emerald-400/5',
+  javascript:    'bg-yellow-400/10 dark:bg-yellow-400/5',
+  typescript:    'bg-blue-500/10 dark:bg-blue-500/5',
+  html:          'bg-orange-500/10 dark:bg-orange-500/5',
+  css:           'bg-indigo-500/10 dark:bg-indigo-500/5',
+  browser:       'bg-emerald-400/10 dark:bg-emerald-400/5',
+  networking:    'bg-cyan-500/10 dark:bg-cyan-500/5',
+  performance:   'bg-orange-400/10 dark:bg-orange-400/5',
+  react:         'bg-sky-400/10 dark:bg-sky-400/5',
+  vue:           'bg-green-500/10 dark:bg-green-500/5',
+  angular:       'bg-red-500/10 dark:bg-red-500/5',
+  svelte:        'bg-red-400/10 dark:bg-red-400/5',
+  testing:       'bg-emerald-500/10 dark:bg-emerald-500/5',
+  security:      'bg-violet-500/10 dark:bg-violet-500/5',
+  tools:         'bg-slate-400/10 dark:bg-slate-400/5',
+  algorithms:    'bg-purple-500/10 dark:bg-purple-500/5',
+  'system-design': 'bg-sky-500/10 dark:bg-sky-500/5',
 };
 
 export async function CategoryGrid({

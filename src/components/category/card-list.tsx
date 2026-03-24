@@ -1,9 +1,13 @@
+'use client';
+
+import { useState } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import { cn } from '@/lib/utils';
-import { BookOpen, Clock, CheckCircle2, RotateCcw, Sparkles } from 'lucide-react';
+import { ChevronDown, Clock, CheckCircle2, RotateCcw, Sparkles, BookOpen } from 'lucide-react';
 import type { CardProgress } from '@prisma/client';
 import type { CategoryWithCards } from '@/types/db';
-import type { StatusLabels, DateLabels } from '@/types/ui';
 import { formatDueDate } from '@/lib/db/category';
+import { MarkdownContent } from '@/components/ui/markdown-content';
 
 const DIFFICULTY_COLOR: Record<string, string> = {
   EASY:   'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
@@ -16,7 +20,7 @@ type StatusInfo = { label: string; color: string; icon: React.ReactNode };
 function getStatusInfo(
   progress: CardProgress | undefined,
   now: Date,
-  labels: StatusLabels
+  labels: { new: string; learning: string; due: string; learned: string }
 ): StatusInfo {
   if (!progress) {
     return { label: labels.new, color: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400', icon: <Sparkles className="h-3 w-3" /> };
@@ -32,55 +36,93 @@ function getStatusInfo(
 
 interface CardListProps {
   cards: CategoryWithCards['cards'];
-  locale: string;
   now: Date;
-  difficultyLabel: Record<string, string>;
-  statusLabels: StatusLabels;
-  dateLabels: DateLabels;
 }
 
-export function CardList({ cards, locale, now, difficultyLabel, statusLabels, dateLabels }: CardListProps) {
+export function CardList({ cards, now }: CardListProps) {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const locale = useLocale();
+  const t = useTranslations('category');
   const isRu = locale === 'ru';
+
+  const difficultyLabel: Record<string, string> = {
+    EASY:   t('difficultyEasy'),
+    MEDIUM: t('difficultyMedium'),
+    HARD:   t('difficultyHard'),
+  };
+
+  const statusLabels = {
+    new:      t('statusNew'),
+    learning: t('statusLearning'),
+    due:      t('statusDue'),
+    learned:  t('statusLearned'),
+  };
+
+  const dateLabels = {
+    now:      t('dueDateNow'),
+    tomorrow: t('dueDateTomorrow'),
+    days:     (n: number) => t('dueDateDays', { n }),
+    weeks:    (n: number) => t('dueDateWeeks', { n }),
+    months:   (n: number) => t('dueDateMonths', { n }),
+  };
 
   return (
     <div className="border rounded-xl overflow-hidden">
-      {cards.map((card, idx) => {
+      {cards.map((card: CategoryWithCards['cards'][number], idx: number) => {
         const progress = card.progress[0];
         const status = getStatusInfo(progress, now, statusLabels);
         const question = isRu ? card.questionRu : card.questionEn;
+        const answer = isRu ? card.answerRu : card.answerEn;
+        const isOpen = openId === card.id;
 
         return (
-          <div
-            key={card.id}
-            className={cn(
-              'flex items-start gap-4 px-4 py-3.5 text-sm',
-              idx !== cards.length - 1 && 'border-b',
-              idx % 2 === 0 ? 'bg-background' : 'bg-muted/30'
-            )}
-          >
-            <span className="text-muted-foreground/50 w-6 shrink-0 mt-0.5 text-xs tabular-nums">
-              {idx + 1}
-            </span>
-
-            <p className="flex-1 leading-snug line-clamp-2">{question}</p>
-
-            <div className="flex items-center gap-2 shrink-0">
-              <span className={cn('flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium', DIFFICULTY_COLOR[card.difficulty])}>
-                {difficultyLabel[card.difficulty]}
-              </span>
-
-              <span className={cn('flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium', status.color)}>
-                {status.icon}
-                {status.label}
-              </span>
-
-              {progress && progress.repetitions > 0 && progress.dueDate > now && (
-                <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Clock className="h-3 w-3" />
-                  {formatDueDate(progress.dueDate, now, dateLabels)}
-                </span>
+          <div key={card.id} className={cn(idx !== cards.length - 1 && 'border-b')}>
+            <button
+              onClick={() => setOpenId(isOpen ? null : card.id)}
+              className={cn(
+                'w-full flex items-start gap-4 px-4 py-3.5 text-sm text-left transition-colors',
+                'hover:bg-muted/50',
+                idx % 2 === 0 ? 'bg-background' : 'bg-muted/30',
+                isOpen && 'bg-muted/50'
               )}
-            </div>
+            >
+              <span className="text-muted-foreground/50 w-6 shrink-0 mt-0.5 text-xs tabular-nums">
+                {idx + 1}
+              </span>
+
+              <p className="flex-1 leading-snug">{question}</p>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <span className={cn('flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium', DIFFICULTY_COLOR[card.difficulty])}>
+                  {difficultyLabel[card.difficulty]}
+                </span>
+
+                <span className={cn('flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium', status.color)}>
+                  {status.icon}
+                  {status.label}
+                </span>
+
+                {progress && progress.repetitions > 0 && progress.dueDate > now && (
+                  <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <Clock className="h-3 w-3" />
+                    {formatDueDate(progress.dueDate, now, dateLabels)}
+                  </span>
+                )}
+
+                <ChevronDown className={cn(
+                  'h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200',
+                  isOpen && 'rotate-180'
+                )} />
+              </div>
+            </button>
+
+            {isOpen && (
+              <div className="px-4 py-4 border-t bg-muted/20">
+                <div className="ml-10 prose prose-sm dark:prose-invert max-w-none">
+                  <MarkdownContent content={answer} />
+                </div>
+              </div>
+            )}
           </div>
         );
       })}
