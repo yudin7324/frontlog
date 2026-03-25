@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 export function StatCard({
   icon,
@@ -12,14 +12,12 @@ export function StatCard({
   highlight?: boolean;
 }) {
   return (
-    <Card className={highlight ? 'border-primary/50 bg-primary/5' : ''}>
-      <CardContent className="pt-5">
-        <div className="flex items-center gap-2 mb-1">
-          {icon}
-          <span className="text-sm text-muted-foreground">{label}</span>
-        </div>
-        <p className="text-3xl font-bold">{value}</p>
-      </CardContent>
-    </Card>
+    <div className={cn('rounded-xl border bg-card text-card-foreground shadow px-4 pt-5 pb-4', highlight ? 'border-primary/50 bg-primary/5' : '')}>
+      <div className="flex items-center gap-2 mb-1">
+        {icon}
+        <span className="text-sm text-muted-foreground">{label}</span>
+      </div>
+      <p className="text-3xl font-bold">{value}</p>
+    </div>
   );
 }

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Card, CardContent } from '@/components/ui/card';
 import { CategoryIcon } from '@/components/ui/category-icon';
 import { CheckCircle2, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -50,11 +49,11 @@ export async function CategoryGrid({
 
         return (
           <Link key={cat.id} href={`/${locale}/categories/${cat.slug}`}>
-            <Card className="overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer h-full">
+            <div className="rounded-xl border bg-card text-card-foreground shadow overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer h-full flex flex-col">
               <div className={cn('h-32 flex items-center justify-center', bg)}>
                 <CategoryIcon slug={cat.slug} className="w-16 h-16" />
               </div>
-              <CardContent className="p-4">
+              <div className="p-4 flex flex-col flex-1">
                 <div className="flex items-start justify-between gap-1 mb-1">
                   <span className="font-bold text-sm leading-tight">{name}</span>
                   <CheckCircle2 className={cn('h-4 w-4 shrink-0 mt-0.5', learned === total && total > 0 ? 'text-green-500' : 'text-muted-foreground/30')} />
@@ -79,8 +78,8 @@ export async function CategoryGrid({
                   </span>
                   <span>{learned} {t('learnedCount')}</span>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </Link>
         );
       })}

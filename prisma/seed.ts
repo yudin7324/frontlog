@@ -8,6 +8,15 @@ import { cards as htmlCards } from './seeds/html';
 import { cards as cssCards } from './seeds/css';
 import { cards as browserCards } from './seeds/browser';
 import { cards as reactCards } from './seeds/react';
+import { cards as nextjsCards } from './seeds/nextjs';
+import { cards as networkingCards } from './seeds/networking';
+import { cards as performanceCards } from './seeds/performance';
+import { cards as testingCards } from './seeds/testing';
+import { cards as securityCards } from './seeds/security';
+import { cards as toolsCards } from './seeds/tools';
+import { cards as algorithmsCards } from './seeds/algorithms';
+import { cards as systemDesignCards } from './seeds/system-design';
+import { cards as patternsCards } from './seeds/patterns';
 
 const prisma = new PrismaClient();
 
@@ -58,7 +67,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'html' },
-      update: { order: 3, isVisible: false },
+      update: { order: 3, isVisible: true },
       create: {
         slug: 'html',
         nameRu: 'HTML',
@@ -72,7 +81,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'css' },
-      update: { order: 4, isVisible: false },
+      update: { order: 4, isVisible: true },
       create: {
         slug: 'css',
         nameRu: 'CSS',
@@ -86,7 +95,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'browser' },
-      update: { nameRu: 'Браузер и рендеринг', nameEn: 'Browser & Rendering', order: 5, isVisible: false },
+      update: { nameRu: 'Браузер и рендеринг', nameEn: 'Browser & Rendering', order: 5, isVisible: true },
       create: {
         slug: 'browser',
         nameRu: 'Браузер и рендеринг',
@@ -100,7 +109,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'networking' },
-      update: { order: 6, isVisible: false },
+      update: { order: 6, isVisible: true },
       create: {
         slug: 'networking',
         nameRu: 'Сеть и HTTP',
@@ -114,7 +123,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'performance' },
-      update: { order: 7, isVisible: false },
+      update: { order: 7, isVisible: true },
       create: {
         slug: 'performance',
         nameRu: 'Производительность',
@@ -141,8 +150,22 @@ async function main() {
       },
     }),
     prisma.category.upsert({
+      where: { slug: 'nextjs' },
+      update: { order: 9, isVisible: true },
+      create: {
+        slug: 'nextjs',
+        nameRu: 'Next.js',
+        nameEn: 'Next.js',
+        descriptionRu: 'App Router, SSR, RSC, data fetching',
+        descriptionEn: 'App Router, SSR, RSC, data fetching',
+        icon: '▲',
+        order: 9,
+        isVisible: true,
+      },
+    }),
+    prisma.category.upsert({
       where: { slug: 'vue' },
-      update: { order: 9, isVisible: false },
+      update: { order: 10, isVisible: false },
       create: {
         slug: 'vue',
         nameRu: 'Vue',
@@ -184,7 +207,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'testing' },
-      update: { order: 12, isVisible: false },
+      update: { order: 12, isVisible: true },
       create: {
         slug: 'testing',
         nameRu: 'Тестирование',
@@ -198,7 +221,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'security' },
-      update: { order: 13, isVisible: false },
+      update: { order: 13, isVisible: true },
       create: {
         slug: 'security',
         nameRu: 'Безопасность',
@@ -212,7 +235,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'tools' },
-      update: { order: 14, isVisible: false },
+      update: { order: 14, isVisible: true },
       create: {
         slug: 'tools',
         nameRu: 'Инструменты',
@@ -226,7 +249,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'algorithms' },
-      update: { order: 15, isVisible: false },
+      update: { order: 15, isVisible: true },
       create: {
         slug: 'algorithms',
         nameRu: 'Алгоритмы и структуры данных',
@@ -251,9 +274,23 @@ async function main() {
         order: 16,
       },
     }),
+    prisma.category.upsert({
+      where: { slug: 'patterns' },
+      update: { order: 17, isVisible: true },
+      create: {
+        slug: 'patterns',
+        nameRu: 'Паттерны и принципы',
+        nameEn: 'Patterns & Principles',
+        descriptionRu: 'SOLID, GoF паттерны, чистый код',
+        descriptionEn: 'SOLID, GoF patterns, clean code',
+        icon: '🧩',
+        order: 17,
+        isVisible: false,
+      },
+    }),
   ]);
 
-  const [js, ts, html, css, browser, , , react] = categories;
+  const [js, ts, html, css, browser, networking, performance, react, nextjs, , , , testing, security, tools, algorithms, systemDesign, patterns] = categories;
 
   await upsertCards(js.id, jsCards);
   await upsertCards(ts.id, tsCards);
@@ -261,6 +298,15 @@ async function main() {
   await upsertCards(css.id, cssCards);
   await upsertCards(browser.id, browserCards);
   await upsertCards(react.id, reactCards);
+  await upsertCards(nextjs.id, nextjsCards);
+  await upsertCards(networking.id, networkingCards);
+  await upsertCards(performance.id, performanceCards);
+  await upsertCards(testing.id, testingCards);
+  await upsertCards(security.id, securityCards);
+  await upsertCards(tools.id, toolsCards);
+  await upsertCards(algorithms.id, algorithmsCards);
+  await upsertCards(systemDesign.id, systemDesignCards);
+  await upsertCards(patterns.id, patternsCards);
 
   console.log('✅ Seed completed!');
 }

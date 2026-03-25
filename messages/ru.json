@@ -1,7 +1,7 @@
 {
   "nav": {
     "study": "Учить",
-    "dashboard": "Дашборд",
+    "dashboard": "Прогресс",
     "categories": "Темы",
     "signIn": "Войти",
     "signOut": "Выйти",
@@ -105,7 +105,7 @@
     "dashboard": "На дашборд"
   },
   "dashboard": {
-    "title": "Дашборд",
+    "title": "Прогресс",
     "greeting": "Добрый день, {name}!",
     "dueCardsToday": "У тебя {count} карточек на сегодня",
     "allCaughtUpToday": "Всё повторено на сегодня!",

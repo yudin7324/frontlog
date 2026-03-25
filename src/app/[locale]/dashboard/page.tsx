@@ -70,14 +70,6 @@ export default async function DashboardPage({
           />
         </div>
 
-        {/* <div className="grid md:grid-cols-2 gap-4 mb-4">
-          <DifficultyStats stats={data.difficultyStats} locale={locale} />
-          <CategoryStats
-            categories={data.categoryStatsForDisplay}
-            locale={locale}
-          />
-        </div> */}
-
         <div className="mb-6">
           <ActivityHeatmap
             data={data.heatmapData}
