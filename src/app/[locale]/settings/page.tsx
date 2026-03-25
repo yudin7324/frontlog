@@ -23,6 +23,7 @@ export default async function SettingsPage({
   const [userSettings, categoriesRaw] = await Promise.all([
     prisma.userSettings.findUnique({ where: { userId } }),
     prisma.category.findMany({
+      where: { isVisible: true },
       orderBy: { order: 'asc' },
       include: {
         cards: {

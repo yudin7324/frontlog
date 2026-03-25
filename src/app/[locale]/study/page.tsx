@@ -42,10 +42,25 @@ export default async function StudyPage({
   if (session?.user?.id) {
     const userId = session.user.id;
 
+    const userSettings = await prisma.userSettings.findUnique({
+      where: { userId },
+      select: { dailyNewCards: true, dailyReviews: true },
+    });
+    const dailyReviewsLimit = userSettings?.dailyReviews ?? 50;
+    const dailyNewCardsLimit = userSettings?.dailyNewCards ?? 10;
+
+    const cardWhere = categoryFilter.category ? { category: { slug: category } } : undefined;
     const progressDue = await prisma.cardProgress.findMany({
-      where: { userId, dueDate: { lte: now }, card: categoryFilter.category ? { category: { slug: category } } : undefined },
+      where: {
+        userId,
+        OR: [
+          { dueDate: { lte: now } },
+          { status: 'LEARNING' },
+        ],
+        card: cardWhere,
+      },
       include: { card: { include: { category: true } } },
-      take: 20,
+      take: dailyReviewsLimit,
     });
 
     const learnedIds = (
@@ -55,7 +70,7 @@ export default async function StudyPage({
     const newCards = await prisma.card.findMany({
       where: { isPublished: true, id: { notIn: learnedIds }, ...categoryFilter },
       include: { category: true },
-      take: Math.max(0, 10 - progressDue.length),
+      take: dailyNewCardsLimit,
       orderBy: [{ category: { order: 'asc' } }, { order: 'asc' }],
     });
 
@@ -63,6 +78,17 @@ export default async function StudyPage({
       ...progressDue.map((p: { card: CardWithCategory }) => p.card),
       ...newCards,
     ];
+
+    // Fallback: if nothing due and no new cards, show soonest upcoming cards
+    if (dueCards.length === 0) {
+      const upcoming = await prisma.cardProgress.findMany({
+        where: { userId, card: cardWhere },
+        include: { card: { include: { category: true } } },
+        orderBy: { dueDate: 'asc' },
+        take: dailyReviewsLimit,
+      });
+      dueCards = upcoming.map((p: { card: CardWithCategory }) => p.card);
+    }
   } else {
     dueCards = await prisma.card.findMany({
       where: { isPublished: true, ...categoryFilter },

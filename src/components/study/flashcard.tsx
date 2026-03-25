@@ -5,7 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { RATING_LABELS, RATING_COLORS, type Rating } from '@/lib/sm2';
+import { RATING_LABELS, type Rating } from '@/lib/sm2';
 import { cn } from '@/lib/utils';
 import { RotateCcw, ChevronRight } from 'lucide-react';
 import { MarkdownContent } from '@/components/ui/markdown-content';
@@ -86,7 +86,7 @@ export function Flashcard({ card, cardNumber, totalCards, onRate }: FlashcardPro
             {/* Card header */}
             <div className="flex items-center justify-between mb-6">
               <Badge variant="secondary" className="text-xs">
-                {isFlipped ? t('question') : t('question')}
+                {t('question')}
               </Badge>
               <span
                 className={cn(

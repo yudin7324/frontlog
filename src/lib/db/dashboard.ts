@@ -16,6 +16,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     prisma.cardProgress.count({ where: { userId, dueDate: { lte: now } } }),
     prisma.cardProgress.count({ where: { userId, repetitions: { gt: 0 } } }),
     prisma.category.findMany({
+      where: { isVisible: true },
       include: {
         cards: {
           include: { progress: { where: { userId } } },

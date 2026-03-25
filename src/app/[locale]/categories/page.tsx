@@ -33,6 +33,7 @@ export default async function CategoriesPage({
   const isRu = locale === 'ru';
 
   const categories = await prisma.category.findMany({
+    where: { isVisible: true },
     include: {
       cards: {
         where: { isPublished: true },

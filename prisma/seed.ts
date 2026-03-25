@@ -30,7 +30,7 @@ async function main() {
   const categories = await Promise.all([
     prisma.category.upsert({
       where: { slug: 'javascript' },
-      update: { nameRu: 'JavaScript Core', nameEn: 'JavaScript Core', order: 1 },
+      update: { nameRu: 'JavaScript Core', nameEn: 'JavaScript Core', order: 1, isVisible: true },
       create: {
         slug: 'javascript',
         nameRu: 'JavaScript Core',
@@ -39,11 +39,12 @@ async function main() {
         descriptionEn: 'Core and advanced JS concepts',
         icon: '🟨',
         order: 1,
+        isVisible: true,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'typescript' },
-      update: { order: 2 },
+      update: { order: 2, isVisible: true },
       create: {
         slug: 'typescript',
         nameRu: 'TypeScript',
@@ -52,11 +53,12 @@ async function main() {
         descriptionEn: 'Types and TypeScript features',
         icon: '🔷',
         order: 2,
+        isVisible: true,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'html' },
-      update: { order: 3 },
+      update: { order: 3, isVisible: false },
       create: {
         slug: 'html',
         nameRu: 'HTML',
@@ -65,11 +67,12 @@ async function main() {
         descriptionEn: 'Semantics, accessibility, forms',
         icon: '🧱',
         order: 3,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'css' },
-      update: { order: 4 },
+      update: { order: 4, isVisible: false },
       create: {
         slug: 'css',
         nameRu: 'CSS',
@@ -78,11 +81,12 @@ async function main() {
         descriptionEn: 'Layout, flexbox, grid, animations',
         icon: '🎨',
         order: 4,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'browser' },
-      update: { nameRu: 'Браузер и рендеринг', nameEn: 'Browser & Rendering', order: 5 },
+      update: { nameRu: 'Браузер и рендеринг', nameEn: 'Browser & Rendering', order: 5, isVisible: false },
       create: {
         slug: 'browser',
         nameRu: 'Браузер и рендеринг',
@@ -91,11 +95,12 @@ async function main() {
         descriptionEn: 'How browsers work, events, rendering',
         icon: '🌐',
         order: 5,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'networking' },
-      update: { order: 6 },
+      update: { order: 6, isVisible: false },
       create: {
         slug: 'networking',
         nameRu: 'Сеть и HTTP',
@@ -104,11 +109,12 @@ async function main() {
         descriptionEn: 'HTTP, REST, WebSockets, protocols',
         icon: '🔗',
         order: 6,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'performance' },
-      update: { order: 7 },
+      update: { order: 7, isVisible: false },
       create: {
         slug: 'performance',
         nameRu: 'Производительность',
@@ -117,11 +123,12 @@ async function main() {
         descriptionEn: 'Load and rendering optimization',
         icon: '⚡',
         order: 7,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'react' },
-      update: { order: 8 },
+      update: { order: 8, isVisible: true },
       create: {
         slug: 'react',
         nameRu: 'React',
@@ -130,11 +137,12 @@ async function main() {
         descriptionEn: 'Hooks, patterns and lifecycle',
         icon: '⚛️',
         order: 8,
+        isVisible: true,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'vue' },
-      update: { order: 9 },
+      update: { order: 9, isVisible: false },
       create: {
         slug: 'vue',
         nameRu: 'Vue',
@@ -143,11 +151,12 @@ async function main() {
         descriptionEn: 'Composition API, reactivity, ecosystem',
         icon: '💚',
         order: 9,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'angular' },
-      update: { order: 10 },
+      update: { order: 10, isVisible: false },
       create: {
         slug: 'angular',
         nameRu: 'Angular',
@@ -156,11 +165,12 @@ async function main() {
         descriptionEn: 'Components, services, DI, RxJS',
         icon: '🅰️',
         order: 10,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'svelte' },
-      update: { order: 11 },
+      update: { order: 11, isVisible: false },
       create: {
         slug: 'svelte',
         nameRu: 'Svelte',
@@ -169,11 +179,12 @@ async function main() {
         descriptionEn: 'Reactivity, stores, transitions',
         icon: '🔥',
         order: 11,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'testing' },
-      update: { order: 12 },
+      update: { order: 12, isVisible: false },
       create: {
         slug: 'testing',
         nameRu: 'Тестирование',
@@ -182,11 +193,12 @@ async function main() {
         descriptionEn: 'Unit, integration, E2E tests',
         icon: '🧪',
         order: 12,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'security' },
-      update: { order: 13 },
+      update: { order: 13, isVisible: false },
       create: {
         slug: 'security',
         nameRu: 'Безопасность',
@@ -195,11 +207,12 @@ async function main() {
         descriptionEn: 'XSS, CSRF, CSP, authentication',
         icon: '🔒',
         order: 13,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'tools' },
-      update: { order: 14 },
+      update: { order: 14, isVisible: false },
       create: {
         slug: 'tools',
         nameRu: 'Инструменты',
@@ -208,11 +221,12 @@ async function main() {
         descriptionEn: 'Webpack, Vite, ESLint, Git',
         icon: '🔧',
         order: 14,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'algorithms' },
-      update: { order: 15 },
+      update: { order: 15, isVisible: false },
       create: {
         slug: 'algorithms',
         nameRu: 'Алгоритмы и структуры данных',
@@ -221,6 +235,7 @@ async function main() {
         descriptionEn: 'Sorting, search, complexity O(n)',
         icon: '📊',
         order: 15,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
