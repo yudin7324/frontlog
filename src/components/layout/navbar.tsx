@@ -3,18 +3,12 @@
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
-import { Moon, Sun, Menu, BookOpen, Settings } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Moon, Sun, Menu, BookOpen } from 'lucide-react';
 import { buttonVariants } from '@/lib/button-variants';
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { signOut } from 'next-auth/react';
 import { cn } from '@/lib/utils';
 
 interface NavbarProps {
@@ -27,7 +21,9 @@ interface NavbarProps {
 
 export function Navbar({ user }: NavbarProps) {
   const locale = useLocale();
-  const { setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const t = useTranslations('nav');
 
   const otherLocale = locale === 'ru' ? 'en' : 'ru';
@@ -65,44 +61,26 @@ export function Navbar({ user }: NavbarProps) {
             {otherLocale.toUpperCase()}
           </Link>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }))}>
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setTheme('light')}>{t('themeLight')}</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme('dark')}>{t('themeDark')}</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme('system')}>{t('themeSystem')}</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <button
+            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+            className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'cursor-pointer')}
+            aria-label="Toggle theme"
+          >
+            {mounted && resolvedTheme === 'dark'
+              ? <Sun className="h-4 w-4" />
+              : <Moon className="h-4 w-4" />
+            }
+          </button>
 
           {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'rounded-full')}>
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={user.image ?? ''} alt={user.name ?? ''} />
-                  <AvatarFallback>
-                    {user.name?.charAt(0).toUpperCase() ?? 'U'}
-                  </AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <div className="px-2 py-1.5 text-sm text-muted-foreground">
-                  {user.email}
-                </div>
-                <DropdownMenuItem>
-                  <Link href={`/${locale}/settings`} className="flex items-center gap-2 w-full">
-                    <Settings className="h-4 w-4" />
-                    {t('settings')}
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => signOut()}>
-                  {t('signOut')}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Link href={`/${locale}/settings`} className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'rounded-full')}>
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={user.image ?? ''} alt={user.name ?? ''} />
+                <AvatarFallback>
+                  {user.name?.charAt(0).toUpperCase() ?? 'U'}
+                </AvatarFallback>
+              </Avatar>
+            </Link>
           ) : (
             <Link
               href={`/${locale}/auth/signin`}

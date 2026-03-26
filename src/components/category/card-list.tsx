@@ -80,7 +80,7 @@ export function CardList({ cards, now }: CardListProps) {
             <button
               onClick={() => setOpenId(isOpen ? null : card.id)}
               className={cn(
-                'w-full flex items-start gap-4 px-4 py-3.5 text-sm text-left transition-colors',
+                'w-full flex items-start gap-4 px-4 py-3.5 text-sm text-left transition-colors cursor-pointer',
                 'hover:bg-muted/50',
                 idx % 2 === 0 ? 'bg-background' : 'bg-muted/30',
                 isOpen && 'bg-muted/50'
@@ -116,13 +116,18 @@ export function CardList({ cards, now }: CardListProps) {
               </div>
             </button>
 
-            {isOpen && (
-              <div className="px-4 py-4 border-t bg-muted/20">
-                <div className="ml-10 prose prose-sm dark:prose-invert max-w-none">
-                  <MarkdownContent content={answer} />
+            <div
+              style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
+              className="grid transition-[grid-template-rows] duration-200 ease-out"
+            >
+              <div className="overflow-hidden">
+                <div className="px-4 py-4 border-t bg-muted/20">
+                  <div className="ml-10 prose prose-sm dark:prose-invert max-w-none">
+                    <MarkdownContent content={answer} />
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         );
       })}

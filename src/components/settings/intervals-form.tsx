@@ -44,7 +44,7 @@ function Field({
         <button
           type="button"
           onClick={() => onChange(Math.max(min, value - 1))}
-          className="w-7 h-7 rounded border text-sm font-bold hover:bg-muted transition-colors"
+          className="w-7 h-7 rounded border text-sm font-bold hover:bg-muted transition-colors cursor-pointer"
         >
           −
         </button>
@@ -52,7 +52,7 @@ function Field({
         <button
           type="button"
           onClick={() => onChange(Math.min(max, value + 1))}
-          className="w-7 h-7 rounded border text-sm font-bold hover:bg-muted transition-colors"
+          className="w-7 h-7 rounded border text-sm font-bold hover:bg-muted transition-colors cursor-pointer"
         >
           +
         </button>

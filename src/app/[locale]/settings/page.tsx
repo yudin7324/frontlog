@@ -6,6 +6,7 @@ import { getTranslations } from 'next-intl/server';
 import { IntervalsForm } from '@/components/settings/intervals-form';
 import { CategoryResetList } from '@/components/settings/category-reset-list';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { SignOutButton } from '@/components/settings/sign-out-button';
 
 export default async function SettingsPage({
   params,
@@ -68,10 +69,11 @@ export default async function SettingsPage({
               {user.name?.charAt(0).toUpperCase() ?? 'U'}
             </AvatarFallback>
           </Avatar>
-          <div>
+          <div className="flex-1">
             <p className="font-semibold">{user.name}</p>
             <p className="text-sm text-muted-foreground">{user.email}</p>
           </div>
+          <SignOutButton />
         </div>
 
         {/* Intervals & daily limits */}
