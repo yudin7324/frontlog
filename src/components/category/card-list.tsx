@@ -77,11 +77,20 @@ export function CardList({ cards, now }: CardListProps) {
 
         return (
           <div key={card.id} className={cn(idx !== cards.length - 1 && 'border-b')}>
-            <button
+            <div
+              role="button"
+              tabIndex={0}
               onClick={() => setOpenId(isOpen ? null : card.id)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  setOpenId(isOpen ? null : card.id);
+                }
+              }}
               className={cn(
                 'w-full flex items-start gap-4 px-4 py-3.5 text-sm text-left transition-colors cursor-pointer',
                 'hover:bg-muted/50',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                 idx % 2 === 0 ? 'bg-background' : 'bg-muted/30',
                 isOpen && 'bg-muted/50'
               )}
@@ -90,7 +99,9 @@ export function CardList({ cards, now }: CardListProps) {
                 {idx + 1}
               </span>
 
-              <p className="flex-1 leading-snug">{question}</p>
+              <div className="flex-1 select-text prose prose-sm dark:prose-invert max-w-none [&_p]:my-0 [&_p]:leading-snug [&_strong]:font-semibold">
+                <MarkdownContent content={question} />
+              </div>
 
               <div className="flex items-center gap-2 shrink-0">
                 <span className={cn('flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium', DIFFICULTY_COLOR[card.difficulty])}>
@@ -114,7 +125,7 @@ export function CardList({ cards, now }: CardListProps) {
                   isOpen && 'rotate-180'
                 )} />
               </div>
-            </button>
+            </div>
 
             <div
               style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
@@ -122,7 +133,7 @@ export function CardList({ cards, now }: CardListProps) {
             >
               <div className="overflow-hidden">
                 <div className="px-4 py-4 border-t bg-muted/20">
-                  <div className="ml-10 prose prose-sm dark:prose-invert max-w-none">
+                  <div className="ml-10 select-text prose prose-sm dark:prose-invert max-w-none">
                     <MarkdownContent content={answer} />
                   </div>
                 </div>

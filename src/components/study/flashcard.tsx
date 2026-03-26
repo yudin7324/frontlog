@@ -54,6 +54,16 @@ export function Flashcard({ card, cardNumber, totalCards, onRate }: FlashcardPro
     onRate(card.id, rating);
   };
 
+  const handleCardClick = () => {
+    if (typeof window !== 'undefined' && window.getSelection()?.toString()) {
+      return;
+    }
+
+    if (!isFlipped) {
+      setIsFlipped(true);
+    }
+  };
+
   const ratings: Rating[] = [0, 1, 2, 3];
 
   return (
@@ -75,12 +85,12 @@ export function Flashcard({ card, cardNumber, totalCards, onRate }: FlashcardPro
       {/* Карточка */}
       <Card
         className={cn(
-          'border-2 transition-colors duration-200 select-none',
+          'border-2 transition-colors duration-200',
           isFlipped
             ? 'border-primary/20 cursor-default'
             : 'cursor-pointer hover:border-primary/40 hover:shadow-md'
         )}
-        onClick={() => !isFlipped && setIsFlipped(true)}
+        onClick={handleCardClick}
       >
         <CardContent className="p-8">
           <div className="flex items-center justify-between mb-6">
@@ -92,7 +102,7 @@ export function Flashcard({ card, cardNumber, totalCards, onRate }: FlashcardPro
 
           {/* Вопрос */}
           <div className={cn(
-            'prose prose-sm dark:prose-invert max-w-none transition-opacity duration-200',
+            'select-text prose prose-sm dark:prose-invert max-w-none transition-opacity duration-200',
             isFlipped && 'opacity-50'
           )}>
             <MarkdownContent content={question} />
@@ -100,7 +110,7 @@ export function Flashcard({ card, cardNumber, totalCards, onRate }: FlashcardPro
 
           {/* Ответ */}
           {isFlipped && (
-            <div className="mt-6 pt-6 border-t prose prose-sm dark:prose-invert max-w-none">
+            <div className="mt-6 pt-6 border-t select-text prose prose-sm dark:prose-invert max-w-none">
               <MarkdownContent content={answer} />
             </div>
           )}
