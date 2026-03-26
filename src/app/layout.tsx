@@ -16,9 +16,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
     template: '%s | FrontLog',
-    default: 'FrontLog — Подготовка к frontend-собеседованиям',
+    default: 'FrontLog — Вопросы на frontend собеседование с ответами',
   },
-  description: 'Flashcard-система с интервальным повторением для frontend-разработчиков. Готовься к собеседованиям по JavaScript, TypeScript, React, Next.js и CSS.',
+  description: 'Подготовка к frontend собеседованию с карточками и интервальным повторением. Вопросы и ответы по JavaScript, TypeScript, React, Next.js, CSS, алгоритмам. Учи эффективно — как в Anki.',
+  keywords: ['frontend собеседование', 'вопросы на собеседование фронтенд', 'подготовка к собеседованию javascript', 'react вопросы собеседование', 'typescript вопросы', 'frontend interview', 'флеш карточки программирование', 'интервальное повторение'],
   openGraph: {
     type: 'website',
     siteName: 'FrontLog',

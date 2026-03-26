@@ -51,7 +51,10 @@
     "step3Title": "Возвращайся вовремя",
     "step3Desc": "Алгоритм SM-2 планирует следующее повторение — ни слишком рано, ни слишком поздно",
     "topicsTitle": "Доступные темы",
-    "footerText": "Подготовка к frontend-собеседованиям"
+    "footerText": "Подготовка к frontend-собеседованиям",
+    "contactTitle": "Связь и предложения",
+    "contactDesc": "Нашли баг, хотите предложить тему или оставить отзыв — пишите:",
+    "contactEmail": "frontlogapp@gmail.com"
   },
   "categories": {
     "title": "Темы",

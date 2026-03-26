@@ -12,12 +12,14 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://frontlog.ru';
 
 const META = {
   ru: {
-    title: 'FrontLog — Подготовка к frontend-собеседованиям',
-    description: 'Flashcard-система с интервальным повторением для frontend-разработчиков. Учи JavaScript, TypeScript, React, Next.js, CSS и готовься к собеседованиям.',
+    title: 'FrontLog — Вопросы и ответы на frontend собеседование',
+    description: 'Подготовься к собеседованию фронтенд разработчика с помощью карточек. Вопросы и ответы по JavaScript, TypeScript, React, Next.js, CSS, алгоритмам и системному дизайну. Интервальное повторение — учи быстро и запоминай надолго.',
+    keywords: ['frontend собеседование вопросы', 'подготовка к собеседованию фронтенд', 'javascript вопросы собеседование', 'react typescript вопросы и ответы', 'флеш карточки программист'],
   },
   en: {
-    title: 'FrontLog — Frontend Interview Prep',
-    description: 'Spaced repetition flashcard system for frontend developers. Study JavaScript, TypeScript, React, Next.js, CSS and ace your interviews.',
+    title: 'FrontLog — Frontend Interview Questions & Answers',
+    description: 'Prepare for your frontend developer interview with spaced repetition flashcards. JavaScript, TypeScript, React, Next.js, CSS, algorithms and system design questions with answers.',
+    keywords: ['frontend interview questions', 'javascript interview prep', 'react interview questions', 'typescript flashcards', 'frontend developer interview'],
   },
 };
 
@@ -33,6 +35,7 @@ export async function generateMetadata({
   return {
     title: meta.title,
     description: meta.description,
+    keywords: meta.keywords,
     alternates: {
       canonical: `${BASE_URL}/${locale}`,
       languages: {

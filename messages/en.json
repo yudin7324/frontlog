@@ -51,7 +51,10 @@
     "step3Title": "Come back on time",
     "step3Desc": "The SM-2 algorithm schedules the next review — not too early, not too late",
     "topicsTitle": "Available topics",
-    "footerText": "Frontend interview prep"
+    "footerText": "Frontend interview prep",
+    "contactTitle": "Feedback & Suggestions",
+    "contactDesc": "Found a bug, want to suggest a topic, or leave feedback — write to us:",
+    "contactEmail": "frontlogapp@gmail.com"
   },
   "categories": {
     "title": "Topics",

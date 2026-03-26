@@ -107,8 +107,22 @@ export default async function HomePage() {
         </section>
       </main>
 
-      <footer className="border-t py-6 text-center text-xs text-muted-foreground">
-        FrontLog © {new Date().getFullYear()} · {t('footerText')}
+      <footer className="border-t">
+        <div className="container mx-auto max-w-3xl px-4 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold mb-1">{t('contactTitle')}</p>
+            <p className="text-xs text-muted-foreground mb-2">{t('contactDesc')}</p>
+            <a
+              href="mailto:frontlogapp@gmail.com"
+              className="text-sm font-medium hover:underline"
+            >
+              {t('contactEmail')}
+            </a>
+          </div>
+          <p className="text-xs text-muted-foreground text-center sm:text-right shrink-0">
+            FrontLog © {new Date().getFullYear()}<br />{t('footerText')}
+          </p>
+        </div>
       </footer>
       </div>
     </div>

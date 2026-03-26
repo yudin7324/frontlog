@@ -25,7 +25,12 @@ async function upsertCards(categoryId: string, cards: CardSeed[]) {
     cards.map((card) =>
       prisma.card.upsert({
         where: { id: card.id },
-        update: {},
+        update: {
+          questionRu: card.questionRu,
+          questionEn: card.questionEn,
+          answerRu: card.answerRu,
+          answerEn: card.answerEn,
+        },
         create: { ...card, categoryId, isPublished: true },
       })
     )
