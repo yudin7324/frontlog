@@ -76,7 +76,7 @@ async function main() {
         descriptionEn: 'Semantics, accessibility, forms',
         icon: '🧱',
         order: 3,
-        isVisible: false,
+        isVisible: true,
       },
     }),
     prisma.category.upsert({
@@ -90,54 +90,12 @@ async function main() {
         descriptionEn: 'Layout, flexbox, grid, animations',
         icon: '🎨',
         order: 4,
-        isVisible: false,
-      },
-    }),
-    prisma.category.upsert({
-      where: { slug: 'browser' },
-      update: { nameRu: 'Браузер и рендеринг', nameEn: 'Browser & Rendering', order: 5, isVisible: true },
-      create: {
-        slug: 'browser',
-        nameRu: 'Браузер и рендеринг',
-        nameEn: 'Browser & Rendering',
-        descriptionRu: 'Как работает браузер, события, rendering',
-        descriptionEn: 'How browsers work, events, rendering',
-        icon: '🌐',
-        order: 5,
-        isVisible: false,
-      },
-    }),
-    prisma.category.upsert({
-      where: { slug: 'networking' },
-      update: { order: 6, isVisible: true },
-      create: {
-        slug: 'networking',
-        nameRu: 'Сеть и HTTP',
-        nameEn: 'Networking & HTTP',
-        descriptionRu: 'HTTP, REST, WebSockets, протоколы',
-        descriptionEn: 'HTTP, REST, WebSockets, protocols',
-        icon: '🔗',
-        order: 6,
-        isVisible: false,
-      },
-    }),
-    prisma.category.upsert({
-      where: { slug: 'performance' },
-      update: { order: 7, isVisible: true },
-      create: {
-        slug: 'performance',
-        nameRu: 'Производительность',
-        nameEn: 'Performance',
-        descriptionRu: 'Оптимизация загрузки и рендеринга',
-        descriptionEn: 'Load and rendering optimization',
-        icon: '⚡',
-        order: 7,
-        isVisible: false,
+        isVisible: true,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'react' },
-      update: { order: 8, isVisible: true },
+      update: { order: 5, isVisible: false },
       create: {
         slug: 'react',
         nameRu: 'React',
@@ -145,13 +103,13 @@ async function main() {
         descriptionRu: 'Хуки, паттерны и жизненный цикл',
         descriptionEn: 'Hooks, patterns and lifecycle',
         icon: '⚛️',
-        order: 8,
+        order: 5,
         isVisible: true,
       },
     }),
     prisma.category.upsert({
       where: { slug: 'nextjs' },
-      update: { order: 9, isVisible: true },
+      update: { order: 6, isVisible: false },
       create: {
         slug: 'nextjs',
         nameRu: 'Next.js',
@@ -159,8 +117,50 @@ async function main() {
         descriptionRu: 'App Router, SSR, RSC, data fetching',
         descriptionEn: 'App Router, SSR, RSC, data fetching',
         icon: '▲',
-        order: 9,
+        order: 6,
         isVisible: true,
+      },
+    }),
+    prisma.category.upsert({
+      where: { slug: 'browser' },
+      update: { nameRu: 'Браузер и рендеринг', nameEn: 'Browser & Rendering', order: 7, isVisible: true },
+      create: {
+        slug: 'browser',
+        nameRu: 'Браузер и рендеринг',
+        nameEn: 'Browser & Rendering',
+        descriptionRu: 'Как работает браузер, события, rendering',
+        descriptionEn: 'How browsers work, events, rendering',
+        icon: '🌐',
+        order: 7,
+        isVisible: false,
+      },
+    }),
+    prisma.category.upsert({
+      where: { slug: 'networking' },
+      update: { order: 8, isVisible: false },
+      create: {
+        slug: 'networking',
+        nameRu: 'Сеть и HTTP',
+        nameEn: 'Networking & HTTP',
+        descriptionRu: 'HTTP, REST, WebSockets, протоколы',
+        descriptionEn: 'HTTP, REST, WebSockets, protocols',
+        icon: '🔗',
+        order: 8,
+        isVisible: false,
+      },
+    }),
+    prisma.category.upsert({
+      where: { slug: 'performance' },
+      update: { order: 9, isVisible: false },
+      create: {
+        slug: 'performance',
+        nameRu: 'Производительность',
+        nameEn: 'Performance',
+        descriptionRu: 'Оптимизация загрузки и рендеринга',
+        descriptionEn: 'Load and rendering optimization',
+        icon: '⚡',
+        order: 9,
+        isVisible: false,
       },
     }),
     prisma.category.upsert({
@@ -207,7 +207,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'testing' },
-      update: { order: 12, isVisible: true },
+      update: { order: 12, isVisible: false },
       create: {
         slug: 'testing',
         nameRu: 'Тестирование',
@@ -221,7 +221,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'security' },
-      update: { order: 13, isVisible: true },
+      update: { order: 13, isVisible: false },
       create: {
         slug: 'security',
         nameRu: 'Безопасность',
@@ -235,7 +235,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'tools' },
-      update: { order: 14, isVisible: true },
+      update: { order: 14, isVisible: false },
       create: {
         slug: 'tools',
         nameRu: 'Инструменты',
@@ -249,7 +249,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'algorithms' },
-      update: { order: 15, isVisible: true },
+      update: { order: 15, isVisible: false },
       create: {
         slug: 'algorithms',
         nameRu: 'Алгоритмы и структуры данных',
@@ -263,7 +263,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'system-design' },
-      update: { order: 16 },
+      update: { order: 16, isVisible: false },
       create: {
         slug: 'system-design',
         nameRu: 'Системный дизайн',
@@ -276,7 +276,7 @@ async function main() {
     }),
     prisma.category.upsert({
       where: { slug: 'patterns' },
-      update: { order: 17, isVisible: true },
+      update: { order: 17, isVisible: false },
       create: {
         slug: 'patterns',
         nameRu: 'Паттерны и принципы',

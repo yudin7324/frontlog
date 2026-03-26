@@ -20,6 +20,7 @@ model User {
   sessions      Session[]
   cardProgress  CardProgress[]
   studySessions StudySession[]
+  reviewLogs    ReviewLog[]
   settings      UserSettings?
 
   @@map("users")
@@ -115,8 +116,9 @@ model Card {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
-  category Category @relation(fields: [categoryId], references: [id])
-  progress CardProgress[]
+  category   Category       @relation(fields: [categoryId], references: [id])
+  progress   CardProgress[]
+  reviewLogs ReviewLog[]
 
   @@map("cards")
 }
@@ -139,6 +141,20 @@ model CardProgress {
 
   @@unique([userId, cardId])
   @@map("card_progress")
+}
+
+model ReviewLog {
+  id         String   @id @default(cuid())
+  userId     String
+  cardId     String
+  rating     Int
+  reviewedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@index([userId, reviewedAt])
+  @@map("review_logs")
 }
 
 model StudySession {

@@ -10,6 +10,47 @@ import { getTranslations } from 'next-intl/server';
 import { getCategoryData } from '@/lib/db/category';
 import type { CategoryWithCards } from '@/types/db';
 import { CardList } from '@/components/category/card-list';
+import type { Metadata } from 'next';
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://frontlog.ru';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const isRu = locale === 'ru';
+  const category = await getCategoryData(slug, undefined);
+  if (!category) return {};
+
+  const name = isRu ? category.nameRu : category.nameEn;
+  const desc = isRu ? category.descriptionRu : category.descriptionEn;
+  const title = isRu
+    ? `${name} — вопросы на собеседование`
+    : `${name} — Interview Questions`;
+  const description = desc ?? (isRu
+    ? `${category.cards.length} вопросов по теме ${name} с ответами и интервальным повторением`
+    : `${category.cards.length} ${name} interview questions with answers and spaced repetition`);
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/categories/${slug}`,
+      languages: {
+        ru: `${BASE_URL}/ru/categories/${slug}`,
+        en: `${BASE_URL}/en/categories/${slug}`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${BASE_URL}/${locale}/categories/${slug}`,
+      locale: isRu ? 'ru_RU' : 'en_US',
+    },
+  };
+}
 
 export default async function CategoryPage({
   params,

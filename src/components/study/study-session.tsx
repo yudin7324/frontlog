@@ -37,9 +37,9 @@ export function StudySession({ initialCards, userId, locale }: StudySessionProps
   const t = useTranslations('study');
 
   const handleRate = useCallback(
-    async (cardId: string, rating: Rating) => {
+    (cardId: string, rating: Rating) => {
       if (userId) {
-        await fetch('/api/study/rate', {
+        fetch('/api/study/rate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ cardId, rating }),

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import { ThemeProvider } from '@/components/layout/theme-provider';
 import "./globals.css";
 
 const roboto = Roboto({
@@ -8,9 +9,26 @@ const roboto = Roboto({
   weight: ["400", "500", "700"],
 });
 
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://frontlog.ru';
+
 export const metadata: Metadata = {
-  title: "FrontLog — Подготовка к frontend-собеседованиям",
-  description: "Flashcard-система с интервальным повторением для frontend-разработчиков",
+  metadataBase: new URL(BASE_URL),
+  title: {
+    template: '%s | FrontLog',
+    default: 'FrontLog — Подготовка к frontend-собеседованиям',
+  },
+  description: 'Flashcard-система с интервальным повторением для frontend-разработчиков. Готовься к собеседованиям по JavaScript, TypeScript, React, Next.js и CSS.',
+  openGraph: {
+    type: 'website',
+    siteName: 'FrontLog',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -21,7 +39,14 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <body className={`${roboto.variable} font-sans antialiased`}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

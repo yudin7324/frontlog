@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { RATING_LABELS, type Rating } from '@/lib/sm2';
 import { cn } from '@/lib/utils';
-import { RotateCcw, ChevronRight } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 import { MarkdownContent } from '@/components/ui/markdown-content';
 
 interface FlashcardProps {
@@ -40,7 +40,6 @@ const DIFFICULTY_LABELS = {
   HARD: { ru: 'Сложно', en: 'Hard' },
 };
 
-
 export function Flashcard({ card, cardNumber, totalCards, onRate }: FlashcardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const locale = useLocale() as 'ru' | 'en';
@@ -58,74 +57,61 @@ export function Flashcard({ card, cardNumber, totalCards, onRate }: FlashcardPro
   const ratings: Rating[] = [0, 1, 2, 3];
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      {/* Progress */}
-      <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
-        <span>{categoryName}</span>
-        <span>{cardNumber} / {totalCards}</span>
+    <div className="w-full max-w-2xl mx-auto flex flex-col gap-4">
+      {/* Progress — всегда стабильный */}
+      <div>
+        <div className="flex items-center justify-between mb-2 text-sm text-muted-foreground">
+          <span>{categoryName}</span>
+          <span>{cardNumber} / {totalCards}</span>
+        </div>
+        <div className="w-full bg-secondary rounded-full h-1.5">
+          <div
+            className="bg-primary h-1.5 rounded-full transition-all duration-500"
+            style={{ width: `${(cardNumber / totalCards) * 100}%` }}
+          />
+        </div>
       </div>
 
-      <div className="w-full bg-secondary rounded-full h-1.5 mb-6">
-        <div
-          className="bg-primary h-1.5 rounded-full transition-all duration-300"
-          style={{ width: `${(cardNumber / totalCards) * 100}%` }}
-        />
-      </div>
+      {/* Карточка */}
+      <Card
+        className={cn(
+          'border-2 transition-colors duration-200 select-none',
+          isFlipped
+            ? 'border-primary/20 cursor-default'
+            : 'cursor-pointer hover:border-primary/40 hover:shadow-md'
+        )}
+        onClick={() => !isFlipped && setIsFlipped(true)}
+      >
+        <CardContent className="p-8">
+          <div className="flex items-center justify-between mb-6">
+            <Badge variant="secondary" className="text-xs">{t('question')}</Badge>
+            <span className={cn('text-xs px-2 py-0.5 rounded-full font-medium', DIFFICULTY_COLORS[card.difficulty])}>
+              {DIFFICULTY_LABELS[card.difficulty][locale]}
+            </span>
+          </div>
 
-      {/* Card */}
-      <div className="perspective-1000">
-        <Card
-          className={cn(
-            'min-h-64 cursor-pointer select-none transition-all duration-300 border-2',
-            !isFlipped && 'hover:border-primary/50 hover:shadow-md',
-            isFlipped && 'border-primary/20'
+          {/* Вопрос */}
+          <div className={cn(
+            'prose prose-sm dark:prose-invert max-w-none transition-opacity duration-200',
+            isFlipped && 'opacity-50'
+          )}>
+            <MarkdownContent content={question} />
+          </div>
+
+          {/* Ответ */}
+          {isFlipped && (
+            <div className="mt-6 pt-6 border-t prose prose-sm dark:prose-invert max-w-none">
+              <MarkdownContent content={answer} />
+            </div>
           )}
-          onClick={() => !isFlipped && setIsFlipped(true)}
-        >
-          <CardContent className="p-8">
-            {/* Card header */}
-            <div className="flex items-center justify-between mb-6">
-              <Badge variant="secondary" className="text-xs">
-                {t('question')}
-              </Badge>
-              <span
-                className={cn(
-                  'text-xs px-2 py-0.5 rounded-full font-medium',
-                  DIFFICULTY_COLORS[card.difficulty]
-                )}
-              >
-                {DIFFICULTY_LABELS[card.difficulty][locale]}
-              </span>
-            </div>
+        </CardContent>
+      </Card>
 
-            {/* Question */}
-            <div className={cn('transition-all duration-200 prose prose-sm dark:prose-invert max-w-none', isFlipped && 'opacity-60')}>
-              <MarkdownContent content={question} />
-            </div>
-
-            {/* Answer */}
-            {isFlipped && (
-              <div className="mt-6 pt-6 border-t prose prose-sm dark:prose-invert max-w-none">
-                <MarkdownContent content={answer} />
-              </div>
-            )}
-
-            {/* Tap hint */}
-            {!isFlipped && (
-              <div className="mt-8 flex items-center gap-1 text-muted-foreground text-sm">
-                <ChevronRight className="h-4 w-4" />
-                <span>{t('showAnswer')}</span>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Rating buttons */}
+      {/* Кнопки рейтинга */}
       {isFlipped && (
-        <div className="mt-6">
-          <p className="text-center text-sm text-muted-foreground mb-4">{t('howWell')}</p>
-          <div className="grid grid-cols-4 gap-3">
+        <div className="flex flex-col gap-2">
+          <p className="text-center text-xs text-muted-foreground">{t('howWell')}</p>
+          <div className="grid grid-cols-4 gap-2 h-16">
             {ratings.map((rating) => (
               <RatingButton
                 key={rating}
@@ -135,21 +121,17 @@ export function Flashcard({ card, cardNumber, totalCards, onRate }: FlashcardPro
               />
             ))}
           </div>
-        </div>
-      )}
-
-      {/* Reset button */}
-      {isFlipped && (
-        <div className="mt-4 flex justify-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsFlipped(false)}
-            className="text-muted-foreground"
-          >
-            <RotateCcw className="h-3 w-3 mr-1" />
-            {locale === 'ru' ? 'Скрыть ответ' : 'Hide answer'}
-          </Button>
+          <div className="flex justify-center">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsFlipped(false)}
+              className="text-muted-foreground text-xs h-7 cursor-pointer"
+            >
+              <RotateCcw className="h-3 w-3 mr-1" />
+              {t('hideAnswer')}
+            </Button>
+          </div>
         </div>
       )}
     </div>
@@ -171,10 +153,10 @@ function RatingButton({
   };
 
   const baseColors = {
-    0: 'border-red-300 hover:bg-red-50 hover:border-red-500 dark:border-red-800 dark:hover:bg-red-950',
-    1: 'border-orange-300 hover:bg-orange-50 hover:border-orange-500 dark:border-orange-800 dark:hover:bg-orange-950',
-    2: 'border-green-300 hover:bg-green-50 hover:border-green-500 dark:border-green-800 dark:hover:bg-green-950',
-    3: 'border-blue-300 hover:bg-blue-50 hover:border-blue-500 dark:border-blue-800 dark:hover:bg-blue-950',
+    0: 'border-red-300 hover:bg-red-50 hover:border-red-400 dark:border-red-800 dark:hover:bg-red-950',
+    1: 'border-orange-300 hover:bg-orange-50 hover:border-orange-400 dark:border-orange-800 dark:hover:bg-orange-950',
+    2: 'border-green-300 hover:bg-green-50 hover:border-green-400 dark:border-green-800 dark:hover:bg-green-950',
+    3: 'border-blue-300 hover:bg-blue-50 hover:border-blue-400 dark:border-blue-800 dark:hover:bg-blue-950',
   } as const;
 
   const textColors = {
@@ -188,7 +170,7 @@ function RatingButton({
     <button
       onClick={onClick}
       className={cn(
-        'flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-all duration-150 active:scale-95',
+        'flex flex-col items-center justify-center gap-1 rounded-lg border-2 transition-all duration-150 active:scale-95 cursor-pointer',
         baseColors[rating]
       )}
     >

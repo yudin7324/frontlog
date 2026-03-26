@@ -25,9 +25,9 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
       },
       orderBy: { order: 'asc' },
     }),
-    prisma.cardProgress.findMany({
-      where: { userId, lastReviewedAt: { not: null, gte: yearAgo } },
-      select: { lastReviewedAt: true },
+    prisma.reviewLog.findMany({
+      where: { userId, reviewedAt: { gte: yearAgo } },
+      select: { reviewedAt: true },
     }),
   ]);
 
@@ -45,9 +45,8 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
 
   // Heatmap
   const dayMap = new Map<string, number>();
-  for (const { lastReviewedAt } of activityRaw) {
-    if (!lastReviewedAt) continue;
-    const key = lastReviewedAt.toISOString().slice(0, 10);
+  for (const { reviewedAt } of activityRaw) {
+    const key = reviewedAt.toISOString().slice(0, 10);
     dayMap.set(key, (dayMap.get(key) ?? 0) + 1);
   }
   const heatmapData = Array.from(dayMap, ([date, count]) => ({ date, count }));

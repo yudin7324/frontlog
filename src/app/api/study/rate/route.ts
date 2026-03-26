@@ -26,6 +26,10 @@ export async function POST(req: NextRequest) {
 
   const result = calculateSM2(currentState, rating as Rating, userSettings ?? {});
 
+  await prisma.reviewLog.create({
+    data: { userId, cardId, rating: rating as number },
+  });
+
   const progress = await prisma.cardProgress.upsert({
     where: { userId_cardId: { userId, cardId } },
     create: {
