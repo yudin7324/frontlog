@@ -24,59 +24,65 @@ export interface SM2Result extends SM2State {
 const MIN_EASE_FACTOR = 1.3;
 
 export interface SM2Intervals {
-  intervalAgain?: number;
-  intervalGood1?: number;
-  intervalGood2?: number;
-  intervalEasy1?: number;
-  intervalEasy2?: number;
+  intervalAgain?: number; // minutes
+  intervalHard?: number;  // minutes
+  intervalGood?: number;  // minutes
+  intervalEasy?: number;  // minutes
 }
 
 export function calculateSM2(state: SM2State, rating: Rating, intervals: SM2Intervals = {}): SM2Result {
   let { easeFactor, interval, repetitions } = state;
 
   const {
-    intervalAgain = 1,
-    intervalGood1 = 1,
-    intervalGood2 = 6,
-    intervalEasy1 = 4,
-    intervalEasy2 = 8,
+    intervalAgain = 5,
+    intervalHard = 10,
+    intervalGood = 1440,  // 1 day
+    intervalEasy = 4320,  // 3 days
   } = intervals;
 
+  const dueDate = new Date();
+
   if (rating === 0) {
-    // Again: reset to beginning
+    // Again: reset, schedule in minutes
     repetitions = 0;
-    interval = intervalAgain;
-  } else if (rating === 1) {
+    interval = 0;
+    dueDate.setMinutes(dueDate.getMinutes() + intervalAgain);
+    return { easeFactor, interval, repetitions, dueDate };
+  }
+
+  if (rating === 1) {
     // Hard: repeat soon, decrease EF
-    repetitions = Math.max(0, repetitions - 1);
-    interval = Math.max(1, Math.round(interval * 1.2));
     easeFactor = Math.max(MIN_EASE_FACTOR, easeFactor - 0.15);
-  } else if (rating === 2) {
+    repetitions = Math.max(0, repetitions - 1);
+    dueDate.setMinutes(dueDate.getMinutes() + intervalHard);
+    interval = Math.max(1, Math.round(intervalHard / 1440));
+    return { easeFactor, interval, repetitions, dueDate };
+  }
+
+  if (rating === 2) {
     // Good: normal progression
-    if (repetitions === 0) {
-      interval = intervalGood1;
-    } else if (repetitions === 1) {
-      interval = intervalGood2;
+    if (repetitions <= 1) {
+      interval = Math.max(1, Math.round(intervalGood / 1440));
+      dueDate.setMinutes(dueDate.getMinutes() + intervalGood);
     } else {
       interval = Math.round(interval * easeFactor);
+      dueDate.setDate(dueDate.getDate() + interval);
+      dueDate.setHours(0, 0, 0, 0);
     }
     repetitions += 1;
   } else {
     // Easy: fast progression, increase EF
-    if (repetitions === 0) {
-      interval = intervalEasy1;
-    } else if (repetitions === 1) {
-      interval = intervalEasy2;
+    easeFactor = Math.min(3.0, easeFactor + 0.1);
+    if (repetitions <= 1) {
+      interval = Math.max(1, Math.round(intervalEasy / 1440));
+      dueDate.setMinutes(dueDate.getMinutes() + intervalEasy);
     } else {
       interval = Math.round(interval * easeFactor * 1.3);
+      dueDate.setDate(dueDate.getDate() + interval);
+      dueDate.setHours(0, 0, 0, 0);
     }
     repetitions += 1;
-    easeFactor = Math.min(3.0, easeFactor + 0.1);
   }
-
-  const dueDate = new Date();
-  dueDate.setDate(dueDate.getDate() + interval);
-  dueDate.setHours(0, 0, 0, 0);
 
   return { easeFactor, interval, repetitions, dueDate };
 }

@@ -32,12 +32,11 @@ model UserSettings {
   dailyNewCards Int     @default(10)
   dailyReviews  Int     @default(50)
 
-  // SM-2 initial intervals (days)
-  intervalAgain Int     @default(1)
-  intervalGood1 Int     @default(1)   // first Good rep
-  intervalGood2 Int     @default(6)   // second Good rep
-  intervalEasy1 Int     @default(4)   // first Easy rep
-  intervalEasy2 Int     @default(8)   // second Easy rep
+  // SM-2 intervals, all stored in minutes
+  intervalAgain Int     @default(5)     // Again: 5 min
+  intervalHard  Int     @default(10)    // Hard: 10 min
+  intervalGood  Int     @default(1440)  // Good: 1 day
+  intervalEasy  Int     @default(4320)  // Easy: 3 days
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -132,6 +131,7 @@ model CardProgress {
   interval       Int        @default(0)     // days until next review
   repetitions    Int        @default(0)     // successful consecutive reviews
   dueDate        DateTime   @default(now())
+  createdAt      DateTime   @default(now())
   lastReviewedAt DateTime?
   totalReviews   Int        @default(0)
   status         CardStatus @default(NEW)

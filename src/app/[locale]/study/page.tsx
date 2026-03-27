@@ -27,6 +27,7 @@ export default async function StudyPage({
   const now = new Date();
   let dueCards: CardWithCategory[] = [];
   let categoryName: string | null = null;
+  let userSettings: Awaited<ReturnType<typeof prisma.userSettings.findUnique>> = null;
   const isRu = locale === 'ru';
 
   const categoryFilter = category ? { category: { slug: category } } : {};
@@ -42,9 +43,8 @@ export default async function StudyPage({
   if (session?.user?.id) {
     const userId = session.user.id;
 
-    const userSettings = await prisma.userSettings.findUnique({
+    userSettings = await prisma.userSettings.findUnique({
       where: { userId },
-      select: { dailyNewCards: true, dailyReviews: true },
     });
     const dailyReviewsLimit = userSettings?.dailyReviews ?? 50;
     const dailyNewCardsLimit = userSettings?.dailyNewCards ?? 10;
@@ -53,10 +53,7 @@ export default async function StudyPage({
     const progressDue = await prisma.cardProgress.findMany({
       where: {
         userId,
-        OR: [
-          { dueDate: { lte: now } },
-          { status: 'LEARNING' },
-        ],
+        dueDate: { lte: now },
         card: cardWhere,
       },
       include: { card: { include: { category: true } } },
@@ -68,7 +65,11 @@ export default async function StudyPage({
     ).map((p: { cardId: string }) => p.cardId);
 
     const newCards = await prisma.card.findMany({
-      where: { isPublished: true, id: { notIn: learnedIds }, ...categoryFilter },
+      where: {
+        isPublished: true,
+        ...(learnedIds.length > 0 ? { id: { notIn: learnedIds } } : {}),
+        ...categoryFilter,
+      },
       include: { category: true },
       take: dailyNewCardsLimit,
       orderBy: [{ category: { order: 'asc' } }, { order: 'asc' }],
@@ -128,6 +129,12 @@ export default async function StudyPage({
             initialCards={dueCards}
             userId={session?.user?.id ?? null}
             locale={locale}
+            intervals={{
+              intervalAgain: userSettings?.intervalAgain ?? 5,
+              intervalHard:  userSettings?.intervalHard  ?? 10,
+              intervalGood:  userSettings?.intervalGood  ?? 1440,
+              intervalEasy:  userSettings?.intervalEasy  ?? 4320,
+            }}
           />
         </Suspense>
       </main>

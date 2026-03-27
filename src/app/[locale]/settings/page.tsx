@@ -38,11 +38,10 @@ export default async function SettingsPage({
   const settings = {
     dailyNewCards: userSettings?.dailyNewCards ?? 10,
     dailyReviews:  userSettings?.dailyReviews  ?? 50,
-    intervalAgain: userSettings?.intervalAgain  ?? 1,
-    intervalGood1: userSettings?.intervalGood1  ?? 1,
-    intervalGood2: userSettings?.intervalGood2  ?? 6,
-    intervalEasy1: userSettings?.intervalEasy1  ?? 4,
-    intervalEasy2: userSettings?.intervalEasy2  ?? 8,
+    intervalAgain: userSettings?.intervalAgain ?? 5,
+    intervalHard:  userSettings?.intervalHard  ?? 10,
+    intervalGood:  userSettings?.intervalGood  ?? 1440,
+    intervalEasy:  userSettings?.intervalEasy  ?? 4320,
   };
 
   const categories = categoriesRaw.map((cat) => ({

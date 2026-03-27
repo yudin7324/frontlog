@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     prisma.cardProgress.findUnique({ where: { userId_cardId: { userId, cardId } } }),
     prisma.userSettings.findUnique({
       where: { userId },
-      select: { intervalAgain: true, intervalGood1: true, intervalGood2: true, intervalEasy1: true, intervalEasy2: true },
+      select: { intervalAgain: true, intervalHard: true, intervalGood: true, intervalEasy: true },
     }),
   ]);
 

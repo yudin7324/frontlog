@@ -4,6 +4,8 @@ import type { CategoryWithCards, CategoryStat, DifficultyStats, DashboardData } 
 
 export async function getDashboardData(userId: string): Promise<DashboardData> {
   const now = new Date();
+  const startOfToday = new Date(now);
+  startOfToday.setHours(0, 0, 0, 0);
   const yearAgo = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
 
   const userSettings = await prisma.userSettings.findUnique({
@@ -37,11 +39,18 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     await prisma.cardProgress.findMany({ where: { userId }, select: { cardId: true } })
   ).map((p) => p.cardId);
 
-  const newCardsCount = await prisma.card.count({
-    where: { isPublished: true, id: { notIn: learnedCardIds } },
-  });
+  const [newCardsCount, newIntroducedToday] = await Promise.all([
+    prisma.card.count({
+      where: {
+        isPublished: true,
+        ...(learnedCardIds.length > 0 ? { id: { notIn: learnedCardIds } } : {}),
+      },
+    }),
+    prisma.cardProgress.count({ where: { userId, createdAt: { gte: startOfToday } } }),
+  ]);
 
-  const totalDue = dueCount + Math.min(newCardsCount, dailyNewCardsLimit);
+  const remainingNewToday = Math.max(0, dailyNewCardsLimit - newIntroducedToday);
+  const totalDue = dueCount + Math.min(newCardsCount, remainingNewToday);
 
   // Heatmap
   const dayMap = new Map<string, number>();

@@ -23,13 +23,21 @@ interface CardData {
   };
 }
 
+interface Intervals {
+  intervalAgain: number;
+  intervalHard: number;
+  intervalGood: number;
+  intervalEasy: number;
+}
+
 interface StudySessionProps {
   initialCards: CardData[];
   userId: string | null;
   locale: string;
+  intervals?: Intervals;
 }
 
-export function StudySession({ initialCards, userId, locale }: StudySessionProps) {
+export function StudySession({ initialCards, userId, locale, intervals }: StudySessionProps) {
   const [cards] = useState<CardData[]>(initialCards);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [completed, setCompleted] = useState(0);
@@ -43,6 +51,7 @@ export function StudySession({ initialCards, userId, locale }: StudySessionProps
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ cardId, rating }),
+          keepalive: true,
         });
       }
 
@@ -88,6 +97,7 @@ export function StudySession({ initialCards, userId, locale }: StudySessionProps
       cardNumber={currentIndex + 1}
       totalCards={cards.length}
       onRate={handleRate}
+      intervals={intervals}
     />
   );
 }

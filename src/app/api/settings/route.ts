@@ -15,11 +15,10 @@ export async function GET() {
   return NextResponse.json(settings ?? {
     dailyNewCards: 10,
     dailyReviews: 50,
-    intervalAgain: 1,
-    intervalGood1: 1,
-    intervalGood2: 6,
-    intervalEasy1: 4,
-    intervalEasy2: 8,
+    intervalAgain: 5,
+    intervalHard: 10,
+    intervalGood: 1440,
+    intervalEasy: 4320,
   });
 }
 
@@ -30,7 +29,7 @@ export async function PATCH(req: NextRequest) {
   }
 
   const body = await req.json();
-  const allowed = ['dailyNewCards', 'dailyReviews', 'intervalAgain', 'intervalGood1', 'intervalGood2', 'intervalEasy1', 'intervalEasy2'];
+  const allowed = ['dailyNewCards', 'dailyReviews', 'intervalAgain', 'intervalHard', 'intervalGood', 'intervalEasy'];
   const data: Record<string, number> = {};
 
   for (const key of allowed) {

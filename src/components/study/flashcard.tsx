@@ -10,6 +10,13 @@ import { cn } from '@/lib/utils';
 import { RotateCcw } from 'lucide-react';
 import { MarkdownContent } from '@/components/ui/markdown-content';
 
+interface Intervals {
+  intervalAgain: number;
+  intervalHard: number;
+  intervalGood: number;
+  intervalEasy: number;
+}
+
 interface FlashcardProps {
   card: {
     id: string;
@@ -26,6 +33,7 @@ interface FlashcardProps {
   cardNumber: number;
   totalCards: number;
   onRate: (cardId: string, rating: Rating) => void;
+  intervals?: Intervals;
 }
 
 const DIFFICULTY_COLORS = {
@@ -40,7 +48,7 @@ const DIFFICULTY_LABELS = {
   HARD: { ru: 'Сложно', en: 'Hard' },
 };
 
-export function Flashcard({ card, cardNumber, totalCards, onRate }: FlashcardProps) {
+export function Flashcard({ card, cardNumber, totalCards, onRate, intervals }: FlashcardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const locale = useLocale() as 'ru' | 'en';
   const t = useTranslations('study');
@@ -128,6 +136,7 @@ export function Flashcard({ card, cardNumber, totalCards, onRate }: FlashcardPro
                 rating={rating}
                 locale={locale}
                 onClick={() => handleRate(rating)}
+                intervals={intervals}
               />
             ))}
           </div>
@@ -148,19 +157,40 @@ export function Flashcard({ card, cardNumber, totalCards, onRate }: FlashcardPro
   );
 }
 
+function formatInterval(minutes: number, locale: string) {
+  if (minutes < 60) return locale === 'ru' ? `${minutes} мин` : `${minutes} min`;
+  if (minutes < 1440) {
+    const h = Math.round(minutes / 60 * 10) / 10;
+    return locale === 'ru' ? `${h} ч` : `${h} h`;
+  }
+  const d = Math.round(minutes / 1440 * 10) / 10;
+  return locale === 'ru' ? `~${d} дн` : `~${d} d`;
+}
+
 function RatingButton({
   rating,
   locale,
   onClick,
+  intervals,
 }: {
   rating: Rating;
   locale: 'ru' | 'en';
   onClick: () => void;
+  intervals?: Intervals;
 }) {
-  const hints = {
-    ru: { 0: '< 1 дн', 1: '< 2 дн', 2: '~4 дн', 3: '~8 дн' },
-    en: { 0: '< 1d', 1: '< 2d', 2: '~4d', 3: '~8d' },
+  const again = intervals?.intervalAgain ?? 5;
+  const hard  = intervals?.intervalHard  ?? 10;
+  const good  = intervals?.intervalGood  ?? 1440;
+  const easy  = intervals?.intervalEasy  ?? 4320;
+
+  const computedHints: Record<Rating, string> = {
+    0: formatInterval(again, locale),
+    1: formatInterval(hard, locale),
+    2: formatInterval(good, locale),
+    3: formatInterval(easy, locale),
   };
+
+  const hints = computedHints;
 
   const baseColors = {
     0: 'border-red-300 hover:bg-red-50 hover:border-red-400 dark:border-red-800 dark:hover:bg-red-950',
@@ -188,7 +218,7 @@ function RatingButton({
         {RATING_LABELS[locale][rating]}
       </span>
       <span className="text-xs text-muted-foreground">
-        {hints[locale][rating]}
+        {hints[rating]}
       </span>
     </button>
   );
