@@ -178,8 +178,8 @@ export const cards: CardSeed[] = [
     tags: ['auth', 'security', 'architecture'],
     questionRu: 'Как проектировать авторизацию на фронтенде?',
     questionEn: 'How do you design authentication on the frontend?',
-    answerRu: '- Хранить токены безопасно: **httpOnly cookie** для refresh, **in-memory** для access\n- `axios` interceptor добавляет `Authorization` заголовок\n- Автообновление access token через refresh token\n- **Protected routes** — redirect на `/login` если не авторизован\n- **Role-based UI**: показывать/скрывать элементы по ролям (только UX, проверка на сервере)\n- Logout — очистить все токены и кеш',
-    answerEn: '- Store tokens securely: **httpOnly cookie** for refresh token, **in-memory** for access token\n- An `axios` interceptor attaches the `Authorization` header\n- Auto-refresh the access token using the refresh token\n- **Protected routes** redirect to `/login` when unauthenticated\n- **Role-based UI** shows/hides elements based on roles (UX only — security enforcement belongs on the server)\n- Logout must clear all tokens and cache',
+    answerRu: '- Хранить токены безопасно: `httpOnly` cookie для refresh, `in-memory` для access\n- `axios` interceptor добавляет `Authorization` заголовок\n- Автообновление access token через refresh token\n- **Protected routes** — redirect на `/login` если не авторизован\n- **Role-based UI**: показывать/скрывать элементы по ролям (только UX, проверка на сервере)\n- Logout — очистить все токены и кеш',
+    answerEn: '- Store tokens securely: `httpOnly` cookie for refresh token, `in-memory` for access token\n- An `axios` interceptor attaches the `Authorization` header\n- Auto-refresh the access token using the refresh token\n- **Protected routes** redirect to `/login` when unauthenticated\n- **Role-based UI** shows/hides elements based on roles (UX only — security enforcement belongs on the server)\n- Logout must clear all tokens and cache',
   },
   {
     id: 'sd-019',
@@ -218,8 +218,8 @@ export const cards: CardSeed[] = [
     tags: ['micro-frontends', 'state-management', 'communication'],
     questionRu: 'Как организовать shared state между micro-frontends?',
     questionEn: 'How do you manage shared state between micro-frontends?',
-    answerRu: '- **Custom Events** / **BroadcastChannel** — события между независимыми приложениями\n- Shared стор через **Module Federation**\n- **URL** как источник истины для роутинга\n- Shared библиотека для типов и утилит\n- **Event bus** для коммуникации без прямых зависимостей\n\nИзбегать тесной связанности — micro-frontends должны быть независимы.',
-    answerEn: '- **Custom Events** / **BroadcastChannel** — for events between independent applications\n- Share a store via **Module Federation**\n- **URL** as the source of truth for routing state\n- A shared library for types and utilities\n- **Event bus** enables communication without direct dependencies\n\nAvoid tight coupling — micro-frontends should remain independent.',
+    answerRu: '- `CustomEvent` / `BroadcastChannel` — события между независимыми приложениями\n- Shared стор через **Module Federation**\n- **URL** как источник истины для роутинга\n- Shared библиотека для типов и утилит\n- **Event bus** для коммуникации без прямых зависимостей\n\nИзбегать тесной связанности — micro-frontends должны быть независимы.',
+    answerEn: '- `CustomEvent` / `BroadcastChannel` — for events between independent applications\n- Share a store via **Module Federation**\n- **URL** as the source of truth for routing state\n- A shared library for types and utilities\n- **Event bus** enables communication without direct dependencies\n\nAvoid tight coupling — micro-frontends should remain independent.',
   },
   {
     id: 'sd-023',

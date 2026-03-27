@@ -8,8 +8,8 @@ export const cards: CardSeed[] = [
     tags: ['bundler', 'webpack', 'vite'],
     questionRu: 'Что такое бандлер и зачем нужен?',
     questionEn: 'What is a bundler and why is it needed?',
-    answerRu: '**Бандлер** собирает модули и зависимости в один или несколько файлов для браузера.\n\nЗадачи:\n- разрешение импортов\n- транспиляция (`TS`/`JSX` → `JS`)\n- минификация\n- **code splitting**\n- **tree shaking**\n- обработка ассетов (`CSS`, изображения)\n\nОсновные: **Webpack**, **Vite**, **Rollup**, **Parcel**, **esbuild**.',
-    answerEn: 'A **bundler** assembles modules and dependencies into one or more files for the browser.\n\nResponsibilities:\n- resolving imports\n- transpilation (`TS`/`JSX` → `JS`)\n- minification\n- **code splitting**\n- **tree shaking**\n- asset handling (`CSS`, images)\n\nMain bundlers: **Webpack**, **Vite**, **Rollup**, **Parcel**, **esbuild**.',
+    answerRu: '**Бандлер** собирает модули и зависимости в один или несколько файлов для браузера.\n\nЗадачи:\n- разрешение импортов\n- транспиляция (`TS`/`JSX` → `JS`)\n- минификация\n- **code splitting**\n- **tree shaking**\n- обработка ассетов (`CSS`, изображения)\n\nОсновные:\n- **Webpack**\n- **Vite**\n- **Rollup**\n- **Parcel**\n- **esbuild**',
+    answerEn: 'A **bundler** assembles modules and dependencies into one or more files for the browser.\n\nResponsibilities:\n- resolving imports\n- transpilation (`TS`/`JSX` → `JS`)\n- minification\n- **code splitting**\n- **tree shaking**\n- asset handling (`CSS`, images)\n\nMain bundlers:\n- **Webpack**\n- **Vite**\n- **Rollup**\n- **Parcel**\n- **esbuild**',
   },
   {
     id: 'tools-002',
@@ -128,8 +128,8 @@ export const cards: CardSeed[] = [
     tags: ['git', 'conventional-commits'],
     questionRu: 'Что такое Conventional Commits?',
     questionEn: 'What are Conventional Commits?',
-    answerRu: '**Conventional Commits** — соглашение о формате коммитов: `type(scope): description`.\n\nТипы:\n- `feat` — новая фича\n- `fix` — баг\n- `docs`, `style`, `refactor`, `test`, `chore`\n\nПозволяет:\n- автогенерацию `CHANGELOG`\n- автоматическое управление версиями (`semantic-release`)\n- понятную историю\n\nИнструменты: `commitlint`, `commitizen`.',
-    answerEn: '**Conventional Commits** is a convention for commit message formatting: `type(scope): description`.\n\nTypes:\n- `feat` — new feature\n- `fix` — bug fix\n- `docs`, `style`, `refactor`, `test`, `chore`\n\nEnables:\n- automatic `CHANGELOG` generation\n- automated versioning (`semantic-release`)\n- a readable history\n\nTools: `commitlint`, `commitizen`.',
+    answerRu: '**Conventional Commits** — соглашение о формате коммитов: `type(scope): description`.\n\nТипы:\n- `feat` — новая фича\n- `fix` — баг\n- `docs`\n- `style`\n- `refactor`\n- `test`\n- `chore`\n\nПозволяет:\n- автогенерацию `CHANGELOG`\n- автоматическое управление версиями (`semantic-release`)\n- понятную историю\n\nИнструменты:\n- `commitlint`\n- `commitizen`',
+    answerEn: '**Conventional Commits** is a convention for commit message formatting: `type(scope): description`.\n\nTypes:\n- `feat` — new feature\n- `fix` — bug fix\n- `docs`\n- `style`\n- `refactor`\n- `test`\n- `chore`\n\nEnables:\n- automatic `CHANGELOG` generation\n- automated versioning (`semantic-release`)\n- a readable history\n\nTools:\n- `commitlint`\n- `commitizen`',
   },
   {
     id: 'tools-014',
@@ -178,8 +178,8 @@ export const cards: CardSeed[] = [
     tags: ['ci-cd', 'devops'],
     questionRu: 'Что такое CI/CD?',
     questionEn: 'What is CI/CD?',
-    answerRu: '**CI** (Continuous Integration): автоматическая сборка и тестирование при каждом `push`/`PR` — раннее обнаружение ошибок.\n\n**CD** (Continuous Delivery): автоматический деплой в staging после прохождения CI.\n\n**Continuous Deployment**: автоматический деплой в production.\n\nИнструменты: **GitHub Actions**, **GitLab CI**, **CircleCI**, **Jenkins**.',
-    answerEn: '**CI** (Continuous Integration): automated build and testing on every `push`/`PR` — enables early detection of errors.\n\n**CD** (Continuous Delivery): automatic deployment to staging after CI passes.\n\n**Continuous Deployment**: automatic deployment to production.\n\nTools: **GitHub Actions**, **GitLab CI**, **CircleCI**, **Jenkins**.',
+    answerRu: '**CI** (Continuous Integration): автоматическая сборка и тестирование при каждом `push`/`PR` — раннее обнаружение ошибок.\n\n**CD** (Continuous Delivery): автоматический деплой в staging после прохождения CI.\n\n**Continuous Deployment**: автоматический деплой в production.\n\nИнструменты:\n- **GitHub Actions**\n- **GitLab CI**\n- **CircleCI**\n- **Jenkins**',
+    answerEn: '**CI** (Continuous Integration): automated build and testing on every `push`/`PR` — enables early detection of errors.\n\n**CD** (Continuous Delivery): automatic deployment to staging after CI passes.\n\n**Continuous Deployment**: automatic deployment to production.\n\nTools:\n- **GitHub Actions**\n- **GitLab CI**\n- **CircleCI**\n- **Jenkins**',
   },
   {
     id: 'tools-019',

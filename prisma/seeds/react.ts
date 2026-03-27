@@ -330,14 +330,20 @@ Both are for **optimization**: they prevent unnecessary computations and re-rend
 
 Позволяет выносить и переиспользовать логику с состоянием.
 
-Примеры: \`useFetch\`, \`useLocalStorage\`, \`useDebounce\`.
+Примеры:
+- \`useFetch\`
+- \`useLocalStorage\`
+- \`useDebounce\`
 
 Не шарит \`state\` между компонентами — каждый вызов создаёт **изолированный state**.`,
     answerEn: `A **custom hook** is a function whose name starts with \`use\`, which can call other hooks.
 
 It allows extracting and reusing stateful logic.
 
-Examples: \`useFetch\`, \`useLocalStorage\`, \`useDebounce\`.
+Examples:
+- \`useFetch\`
+- \`useLocalStorage\`
+- \`useDebounce\`
 
 It does not share \`state\` between components — each call creates **isolated state**.`,
   },
@@ -551,17 +557,33 @@ It separates **server state** (React Query) from **client state** (Zustand / Red
     questionRu: 'Что такое серверный state vs клиентский state?',
     questionEn: 'What is server state vs. client state?',
     answerRu: `**Серверный state** — данные с сервера: асинхронны, могут устареть, нужно кешировать и синхронизировать.
-Инструменты: \`React Query\`, \`SWR\`, \`RTK Query\`
+
+Инструменты:
+- \`React Query\`
+- \`SWR\`
+- \`RTK Query\`
 
 **Клиентский state** — UI-state: модалки, фильтры, форма.
-Инструменты: \`useState\`, \`Zustand\`, \`Redux\`
+
+Инструменты:
+- \`useState\`
+- \`Zustand\`
+- \`Redux\`
 
 Смешивание в одном \`store\` — **антипаттерн**.`,
     answerEn: `**Server state** — data from the server: asynchronous, can become stale, needs to be cached and synchronized.
-Tools: \`React Query\`, \`SWR\`, \`RTK Query\`
+
+Tools:
+- \`React Query\`
+- \`SWR\`
+- \`RTK Query\`
 
 **Client state** — UI state: modals, filters, forms.
-Tools: \`useState\`, \`Zustand\`, \`Redux\`
+
+Tools:
+- \`useState\`
+- \`Zustand\`
+- \`Redux\`
 
 Mixing them in a single \`store\` is an **anti-pattern**.`,
   },
@@ -666,7 +688,9 @@ This reduces the initial bundle size and speeds up loading.`,
 - \`react-window\` (легковесная)
 - \`react-virtual\` (TanStack)
 
-Критично для: больших таблиц, бесконечных лент.
+Критично для:
+- больших таблиц
+- бесконечных лент
 
 Без виртуализации — тормоза и высокое потребление памяти.`,
     answerEn: `**Virtualization** is rendering only the **visible items** in a list. For 10,000 rows, only ~20 visible ones are rendered in the DOM.
@@ -675,7 +699,9 @@ Libraries:
 - \`react-window\` (lightweight)
 - \`react-virtual\` (TanStack)
 
-Critical for: large tables, infinite feeds.
+Critical for:
+- large tables
+- infinite feeds
 
 Without virtualization — slow performance and high memory usage.`,
   },
@@ -688,12 +714,18 @@ Without virtualization — slow performance and high memory usage.`,
     questionEn: 'What is batching in React 18?',
     answerRu: `**Batching** — группировка нескольких вызовов \`setState\` в один ре-рендер.
 
-В React 17 batching работал только в обработчиках событий. React 18 ввёл **automatic batching** — везде: async функции, \`setTimeout\`, промисы.
+В React 17 batching работал только в обработчиках событий. React 18 ввёл **automatic batching** — везде:
+- async функции
+- \`setTimeout\`
+- промисы
 
 Уменьшает количество ре-рендеров. Отключить: \`flushSync()\`.`,
     answerEn: `**Batching** is grouping multiple \`setState\` calls into a single re-render.
 
-In React 17, batching only worked in event handlers. React 18 introduced **automatic batching** — everywhere: async functions, \`setTimeout\`, promises.
+In React 17, batching only worked in event handlers. React 18 introduced **automatic batching** — everywhere:
+- async functions
+- \`setTimeout\`
+- promises
 
 It reduces the number of re-renders. To opt out: \`flushSync()\`.`,
   },
@@ -838,12 +870,22 @@ The \`react-error-boundary\` library simplifies their use.`,
 
 События всплывают через **React-дерево**, не через DOM.
 
-Используется для: модальных окон, тултипов, дропдаунов — чтобы избежать проблем с \`overflow:hidden\` и \`z-index\`.`,
+Используется для:
+- модальных окон
+- тултипов
+- дропдаунов
+
+Позволяет избежать проблем с \`overflow:hidden\` и \`z-index\`.`,
     answerEn: `\`ReactDOM.createPortal(children, domNode)\` renders \`children\` into a different DOM node outside the component hierarchy (e.g., \`document.body\`).
 
 Events bubble through the **React tree**, not the DOM tree.
 
-Used for: modals, tooltips, dropdowns — to avoid issues with \`overflow:hidden\` and \`z-index\`.`,
+Used for:
+- modals
+- tooltips
+- dropdowns
+
+Avoids issues with \`overflow:hidden\` and \`z-index\`.`,
   },
   {
     id: 'react-040',

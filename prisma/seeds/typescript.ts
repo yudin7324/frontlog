@@ -288,7 +288,7 @@ export const cards: CardSeed[] = [
     tags: ['narrowing'],
     questionRu: 'Как работает exhaustiveness check?',
     questionEn: 'How does exhaustiveness checking work?',
-    answerRu: 'Проверка что все варианты union обработаны.\n\nВ `switch`/`if` после всех кейсов присваиваем переменную типу `never`:\n`const _exhaustive: never = shape`\n\nЕсли добавить новый вариант в union без обработки — TS выдаст ошибку компиляции.',
+    answerRu: '**Exhaustiveness check** — проверка что все варианты `union` обработаны.\n\nВ `switch`/`if` после всех кейсов присваиваем переменную типу `never`:\n`const _exhaustive: never = shape`\n\nЕсли добавить новый вариант в `union` без обработки — TS выдаст ошибку компиляции.',
     answerEn: '**Exhaustiveness checking** verifies that all variants of a union are handled.\n\nAfter all cases in a `switch`/`if`, assign the variable to `never`:\n`const _exhaustive: never = shape`\n\nIf you add a new variant to the union without handling it, TS will produce a compile-time error.',
   },
   {
