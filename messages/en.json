@@ -111,7 +111,10 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "greeting": "Good day, {name}!",
+    "greetingMorning": "Good morning, {name}!",
+    "greetingAfternoon": "Good afternoon, {name}!",
+    "greetingEvening": "Good evening, {name}!",
+    "greetingNight": "Good night, {name}!",
     "dueCardsToday": "You have {count} cards today",
     "allCaughtUpToday": "All caught up for today!",
     "review": "Review",

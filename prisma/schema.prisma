@@ -92,7 +92,6 @@ model Category {
   nameEn        String
   descriptionRu String?
   descriptionEn String?
-  icon          String?
   order         Int     @default(0)
   isVisible     Boolean @default(true)
 

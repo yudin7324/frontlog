@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Brain, BookOpen, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ActivityHeatmap } from '@/components/dashboard/activity-heatmap';
+import { Greeting } from '@/components/dashboard/greeting';
 import { DifficultyStats } from '@/components/dashboard/difficulty-stats';
 import { CategoryStats } from '@/components/dashboard/category-stats';
 import { StatCard } from '@/components/dashboard/stat-card';
@@ -38,7 +39,7 @@ export default async function DashboardPage({
       <main className="flex-1 container mx-auto max-w-6xl px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-bold">{t('greeting', { name: firstName })}</h1>
+            <Greeting name={firstName} />
             <p className="text-muted-foreground mt-1">
               {data.totalDue > 0
                 ? t('dueCardsToday', { count: data.totalDue })

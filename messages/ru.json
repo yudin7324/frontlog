@@ -111,7 +111,10 @@
   },
   "dashboard": {
     "title": "Прогресс",
-    "greeting": "Добрый день, {name}!",
+    "greetingMorning": "Доброе утро, {name}!",
+    "greetingAfternoon": "Добрый день, {name}!",
+    "greetingEvening": "Добрый вечер, {name}!",
+    "greetingNight": "Доброй ночи, {name}!",
     "dueCardsToday": "У тебя {count} карточек на сегодня",
     "allCaughtUpToday": "Всё повторено на сегодня!",
     "review": "Повторить",
