@@ -3,13 +3,15 @@
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
-import { Moon, Sun, Menu, BookOpen } from 'lucide-react';
+import { useEffect, useState, startTransition } from 'react';
+import { Moon, Sun, Menu, BookOpen, Globe } from 'lucide-react';
 import { buttonVariants } from '@/lib/button-variants';
+import { Menu as BaseMenu } from '@base-ui/react/menu';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { locales } from '@/i18n/config';
 
 interface NavbarProps {
   user?: {
@@ -23,10 +25,8 @@ export function Navbar({ user }: NavbarProps) {
   const locale = useLocale();
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  useEffect(() => { startTransition(() => setMounted(true)); }, []);
   const t = useTranslations('nav');
-
-  const otherLocale = locale === 'ru' ? 'en' : 'ru';
 
   const navLinks = [
     { href: `/${locale}/dashboard`, label: t('dashboard') },
@@ -54,12 +54,29 @@ export function Navbar({ user }: NavbarProps) {
         </nav>
 
         <div className="flex items-center gap-2 ml-auto">
-          <Link
-            href={`/${otherLocale}`}
-            className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
-          >
-            {otherLocale.toUpperCase()}
-          </Link>
+          <BaseMenu.Root>
+            <BaseMenu.Trigger className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'cursor-pointer')} aria-label="Change language">
+              <Globe className="h-4 w-4" />
+            </BaseMenu.Trigger>
+            <BaseMenu.Portal>
+              <BaseMenu.Positioner side="bottom" align="end" sideOffset={4} className="z-[200]">
+                <BaseMenu.Popup className="min-w-[80px] rounded-md border bg-background p-1 shadow-md transition-[opacity,transform] data-ending-style:opacity-0 data-starting-style:opacity-0">
+                  {locales.map((l) => (
+                    <BaseMenu.LinkItem
+                      key={l}
+                      href={`/${l}`}
+                      className={cn(
+                        'block px-3 py-1.5 text-sm rounded cursor-pointer hover:bg-accent transition-colors',
+                        l === locale && 'font-medium text-primary'
+                      )}
+                    >
+                      {l.toUpperCase()}
+                    </BaseMenu.LinkItem>
+                  ))}
+                </BaseMenu.Popup>
+              </BaseMenu.Positioner>
+            </BaseMenu.Portal>
+          </BaseMenu.Root>
 
           <button
             onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
