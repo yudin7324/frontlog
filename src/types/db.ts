@@ -27,4 +27,5 @@ export interface DashboardData {
   totalActiveDays: number;
   streak: number;
   difficultyStats: DifficultyStats;
+  dailyNewCards: number;
 }

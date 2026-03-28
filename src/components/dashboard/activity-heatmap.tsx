@@ -3,37 +3,40 @@ import { getTranslations } from 'next-intl/server';
 
 type Day = { date: string; count: number };
 
-function cellColor(count: number) {
+// scale: the value that represents "full" activity (max of actual data, floored by dailyGoal)
+function cellColor(count: number, scale: number) {
   if (count === 0) return 'bg-muted';
-  if (count <= 2)  return 'bg-green-200 dark:bg-green-900';
-  if (count <= 5)  return 'bg-green-400 dark:bg-green-700';
-  if (count <= 9)  return 'bg-green-600 dark:bg-green-500';
+  if (count < scale * 0.25) return 'bg-green-200 dark:bg-green-900';
+  if (count < scale * 0.5)  return 'bg-green-400 dark:bg-green-700';
+  if (count < scale * 0.75) return 'bg-green-600 dark:bg-green-500';
   return 'bg-green-800 dark:bg-green-400';
+}
+
+function utcKey(date: Date): string {
+  const y = date.getUTCFullYear();
+  const m = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const d = String(date.getUTCDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 }
 
 function buildGrid(data: Day[]): (Day | null)[][] {
   const lookup = new Map(data.map((d) => [d.date, d.count]));
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const now = new Date();
+  const todayKey = utcKey(now);
 
-  const start = new Date(today);
-  start.setDate(today.getDate() - 364);
-  start.setDate(start.getDate() - start.getDay());
+  const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 364));
+  start.setUTCDate(start.getUTCDate() - start.getUTCDay());
 
   const weeks: (Day | null)[][] = [];
   const cur = new Date(start);
 
-  while (cur <= today) {
+  while (utcKey(cur) <= todayKey) {
     const week: (Day | null)[] = [];
     for (let d = 0; d < 7; d++) {
-      if (cur > today) {
-        week.push(null);
-      } else {
-        const key = cur.toISOString().slice(0, 10);
-        week.push({ date: key, count: lookup.get(key) ?? 0 });
-      }
-      cur.setDate(cur.getDate() + 1);
+      const key = utcKey(cur);
+      week.push(key <= todayKey ? { date: key, count: lookup.get(key) ?? 0 } : null);
+      cur.setUTCDate(cur.getUTCDate() + 1);
     }
     weeks.push(week);
   }
@@ -45,12 +48,15 @@ interface ActivityHeatmapProps {
   locale: string;
   totalDays: number;
   streak: number;
+  dailyGoal: number;
 }
 
-export async function ActivityHeatmap({ data, locale, totalDays, streak }: ActivityHeatmapProps) {
+export async function ActivityHeatmap({ data, locale, totalDays, streak, dailyGoal }: ActivityHeatmapProps) {
   const t = await getTranslations('heatmap');
   const isRu = locale === 'ru';
   const total = data.reduce((s, d) => s + d.count, 0);
+  const maxCount = data.reduce((m, d) => Math.max(m, d.count), 0);
+  const scale = Math.max(maxCount, dailyGoal);
   const weeks = buildGrid(data);
 
   const MONTHS = isRu
@@ -118,7 +124,7 @@ export async function ActivityHeatmap({ data, locale, totalDays, streak }: Activ
                   return (
                     <div
                       key={wi}
-                      className={cn(CELL, 'transition-opacity hover:opacity-70', cellColor(day.count))}
+                      className={cn(CELL, 'transition-opacity hover:opacity-70', cellColor(day.count, scale))}
                       title={`${day.date}${day.count ? `: ${day.count}` : ''}`}
                     />
                   );

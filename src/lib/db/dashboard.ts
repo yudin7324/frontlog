@@ -108,5 +108,6 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     totalActiveDays,
     streak,
     difficultyStats,
+    dailyNewCards: dailyNewCardsLimit,
   };
 }

@@ -76,6 +76,7 @@ export default async function DashboardPage({
             locale={locale}
             totalDays={data.totalActiveDays}
             streak={data.streak}
+            dailyGoal={data.dailyNewCards}
           />
         </div>
 
