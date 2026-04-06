@@ -1,6 +1,6 @@
-import { auth, signIn } from '@/lib/auth';
+import { auth, signIn } from '@/shared/lib/auth';
 import { redirect } from 'next/navigation';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/shared/ui/button';
 import { BookOpen } from 'lucide-react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { getTranslations } from 'next-intl/server';

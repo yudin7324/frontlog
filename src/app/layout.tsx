@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import { ThemeProvider } from '@/components/layout/theme-provider';
+import { ThemeProvider } from '@/widgets/navbar/ui/theme-provider';
 import { Analytics } from '@vercel/analytics/next';
 import "./globals.css";
 

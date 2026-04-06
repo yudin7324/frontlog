@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales } from '@/i18n/config';
+import { locales } from '@/shared/i18n/config';
 import type { Metadata } from 'next';
 
 export function generateStaticParams() {

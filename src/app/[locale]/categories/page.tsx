@@ -1,11 +1,11 @@
-import { auth } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import { Navbar } from '@/components/layout/navbar';
-import { CategoryIcon } from '@/components/ui/category-icon';
-import { Card, CardContent } from '@/components/ui/card';
-import { buttonVariants } from '@/lib/button-variants';
+import { auth } from '@/shared/lib/auth';
+import { prisma } from '@/shared/lib/prisma';
+import { Navbar } from '@/widgets/navbar/ui/navbar';
+import { CategoryIcon } from '@/entities/category/ui/category-icon';
+import { Card, CardContent } from '@/shared/ui/card';
+import { buttonVariants } from '@/shared/lib/button-variants';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { BookOpen, CheckCircle2 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 

@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { getLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
-import { Navbar } from '@/components/layout/navbar';
-import { buttonVariants } from '@/lib/button-variants';
-import { cn } from '@/lib/utils';
-import { auth } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import { CATEGORY_BG, CATEGORY_BORDER } from '@/lib/category-colors';
-import { HeroBackground } from '@/components/ui/hero-background';
+import { Navbar } from '@/widgets/navbar/ui/navbar';
+import { buttonVariants } from '@/shared/lib/button-variants';
+import { cn } from '@/shared/lib/utils';
+import { auth } from '@/shared/lib/auth';
+import { prisma } from '@/shared/lib/prisma';
+import { CATEGORY_BG, CATEGORY_BORDER } from '@/entities/category/lib/category-colors';
+import { HeroBackground } from '@/shared/ui/hero-background';
 
 export default async function HomePage() {
   const locale = await getLocale() as 'ru' | 'en';

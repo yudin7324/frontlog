@@ -1,12 +1,12 @@
-import { auth } from '@/lib/auth';
+import { auth } from '@/shared/lib/auth';
 import { redirect } from 'next/navigation';
-import { Navbar } from '@/components/layout/navbar';
-import { prisma } from '@/lib/prisma';
+import { Navbar } from '@/widgets/navbar/ui/navbar';
+import { prisma } from '@/shared/lib/prisma';
 import { getTranslations } from 'next-intl/server';
-import { IntervalsForm } from '@/components/settings/intervals-form';
-import { CategoryResetList } from '@/components/settings/category-reset-list';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { SignOutButton } from '@/components/settings/sign-out-button';
+import { IntervalsForm } from '@/features/update-settings/ui/intervals-form';
+import { CategoryResetList } from '@/features/reset-progress/ui/category-reset-list';
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
+import { SignOutButton } from '@/features/sign-out/ui/sign-out-button';
 
 export default async function SettingsPage({
   params,

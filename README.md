@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FrontLog
+
+**Spaced repetition flashcards for frontend interview preparation.**
+
+Study JavaScript, TypeScript, React, Next.js, CSS, algorithms and more — using the SM-2 algorithm to review cards at the right time.
+
+## Stack
+
+- **Next.js 16** (App Router, Turbopack)
+- **React 19**
+- **Prisma** + PostgreSQL (Neon)
+- **NextAuth.js** — GitHub & Google OAuth
+- **Tailwind CSS v4**
+- **next-intl** — i18n (ru / en)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
+cp .env.example .env  # fill in DB and OAuth credentials
+npx prisma db push
+npm run db:seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Roadmap
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### v1.1 — UX improvements
+- [ ] Search within categories
+- [ ] Bookmarks — mark cards to revisit
+- [ ] Streak protection notification
+- [ ] Onboarding for new users
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### v1.2 — Content
+- [ ] New categories: Node.js, GraphQL, Docker, Accessibility
+- [ ] Filter by difficulty within a category
+- [ ] Filter by tags
 
-## Learn More
+### v2.0 — New formats
+- [ ] Algorithm challenges (text-based, frontend-focused)
+- [ ] Mock interview mode — timed session, no hints, final score
+- [ ] Quiz mode — multiple choice instead of open-ended
 
-To learn more about Next.js, take a look at the following resources:
+### v2.5 — Social
+- [ ] Public profile with shareable progress
+- [ ] Achievements and badges (30-day streak, 100 cards, etc.)
+- [ ] Weekly leaderboard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### v3.0 — Monetization
+- [ ] Pro subscription — advanced analytics, exclusive categories
+- [ ] Team / corporate plan
+- [ ] Public API
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1 - Замыкания в JS надо поправить
+2 - пофиксить заполнение и хранение прогресса в БД

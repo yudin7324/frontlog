@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import { calculateSM2, type Rating } from '@/lib/sm2';
+import { auth } from '@/shared/lib/auth';
+import { prisma } from '@/shared/lib/prisma';
+import { calculateSM2, type Rating } from '@/entities/card/lib/sm2';
 
 export async function POST(req: NextRequest) {
   const session = await auth();

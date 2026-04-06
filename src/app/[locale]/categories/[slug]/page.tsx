@@ -1,15 +1,15 @@
-import { auth } from '@/lib/auth';
+import { auth } from '@/shared/lib/auth';
 import { notFound } from 'next/navigation';
-import { Navbar } from '@/components/layout/navbar';
-import { CategoryIcon } from '@/components/ui/category-icon';
-import { buttonVariants } from '@/lib/button-variants';
+import { Navbar } from '@/widgets/navbar/ui/navbar';
+import { CategoryIcon } from '@/entities/category/ui/category-icon';
+import { buttonVariants } from '@/shared/lib/button-variants';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { ArrowLeft, BookOpen, CheckCircle2 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
-import { getCategoryData } from '@/lib/db/category';
-import type { CategoryWithCards } from '@/types/db';
-import { CardList } from '@/components/category/card-list';
+import { getCategoryData } from '@/entities/category/lib/db';
+import type { CategoryWithCards } from '@/shared/types/db';
+import { CardList } from '@/entities/category/ui/card-list';
 import type { Metadata } from 'next';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://frontlog.ru';

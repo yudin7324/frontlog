@@ -1,17 +1,17 @@
-import { auth } from '@/lib/auth';
+import { auth } from '@/shared/lib/auth';
 import { redirect } from 'next/navigation';
-import { Navbar } from '@/components/layout/navbar';
-import { buttonVariants } from '@/lib/button-variants';
+import { Navbar } from '@/widgets/navbar/ui/navbar';
+import { buttonVariants } from '@/shared/lib/button-variants';
 import Link from 'next/link';
 import { Brain, BookOpen, CheckCircle2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { ActivityHeatmap } from '@/components/dashboard/activity-heatmap';
-import { Greeting } from '@/components/dashboard/greeting';
-import { DifficultyStats } from '@/components/dashboard/difficulty-stats';
-import { CategoryStats } from '@/components/dashboard/category-stats';
-import { StatCard } from '@/components/dashboard/stat-card';
-import { CategoryGrid } from '@/components/dashboard/category-grid';
-import { getDashboardData } from '@/lib/db/dashboard';
+import { cn } from '@/shared/lib/utils';
+import { ActivityHeatmap } from '@/widgets/activity-heatmap/ui/activity-heatmap';
+import { Greeting } from '@/widgets/dashboard/ui/greeting';
+import { DifficultyStats } from '@/widgets/difficulty-stats/ui/difficulty-stats';
+import { CategoryStats } from '@/widgets/category-stats/ui/category-stats';
+import { StatCard } from '@/widgets/dashboard/ui/stat-card';
+import { CategoryGrid } from '@/widgets/dashboard/ui/category-grid';
+import { getDashboardData } from '@/widgets/dashboard/api/get-dashboard-data';
 import { getTranslations } from 'next-intl/server';
 
 export default async function DashboardPage({

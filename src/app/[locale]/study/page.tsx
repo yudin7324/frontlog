@@ -1,12 +1,12 @@
 import { Suspense } from 'react';
-import { auth } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import { Navbar } from '@/components/layout/navbar';
-import { StudySession } from '@/components/study/study-session';
+import { auth } from '@/shared/lib/auth';
+import { prisma } from '@/shared/lib/prisma';
+import { Navbar } from '@/widgets/navbar/ui/navbar';
+import { StudySession } from '@/widgets/study-session/ui/study-session';
 import { CheckCircle } from 'lucide-react';
-import { buttonVariants } from '@/lib/button-variants';
+import { buttonVariants } from '@/shared/lib/button-variants';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import type { Card, Category } from '@prisma/client';
 import { getTranslations } from 'next-intl/server';
 
