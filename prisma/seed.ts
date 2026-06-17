@@ -30,8 +30,9 @@ async function upsertCards(categoryId: string, cards: CardSeed[]) {
           questionEn: card.questionEn,
           answerRu: card.answerRu,
           answerEn: card.answerEn,
+          isPublished: card.isPublished ?? true,
         },
-        create: { ...card, categoryId, isPublished: true },
+        create: { ...card, categoryId, isPublished: card.isPublished ?? true },
       })
     )
   );

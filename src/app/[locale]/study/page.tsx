@@ -49,7 +49,9 @@ export default async function StudyPage({
     const dailyReviewsLimit = userSettings?.dailyReviews ?? 50;
     const dailyNewCardsLimit = userSettings?.dailyNewCards ?? 10;
 
-    const cardWhere = categoryFilter.category ? { category: { slug: category } } : undefined;
+    const cardWhere = category
+      ? { isPublished: true, category: { slug: category } }
+      : { isPublished: true };
     const progressDue = await prisma.cardProgress.findMany({
       where: {
         userId,

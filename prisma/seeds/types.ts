@@ -7,4 +7,5 @@ export interface CardSeed {
   answerEn: string;
   tags: string[];
   order: number;
+  isPublished?: boolean;
 }
