@@ -132,7 +132,7 @@ async function main() {
         descriptionRu: 'Как работает браузер, события, rendering',
         descriptionEn: 'How browsers work, events, rendering',
         order: 7,
-        isVisible: false,
+        isVisible: true,
       },
     }),
     prisma.category.upsert({
@@ -145,7 +145,7 @@ async function main() {
         descriptionRu: 'HTTP, REST, WebSockets, протоколы',
         descriptionEn: 'HTTP, REST, WebSockets, protocols',
         order: 8,
-        isVisible: false,
+        isVisible: true,
       },
     }),
     prisma.category.upsert({
@@ -158,7 +158,7 @@ async function main() {
         descriptionRu: 'Оптимизация загрузки и рендеринга',
         descriptionEn: 'Load and rendering optimization',
         order: 9,
-        isVisible: false,
+        isVisible: true,
       },
     }),
     prisma.category.upsert({
@@ -197,7 +197,7 @@ async function main() {
         descriptionRu: 'Реактивность, stores, transitions',
         descriptionEn: 'Reactivity, stores, transitions',
         order: 11,
-        isVisible: false,
+        isVisible: true,
       },
     }),
     prisma.category.upsert({
@@ -210,7 +210,7 @@ async function main() {
         descriptionRu: 'Unit, интеграционные, E2E тесты',
         descriptionEn: 'Unit, integration, E2E tests',
         order: 12,
-        isVisible: false,
+        isVisible: true,
       },
     }),
     prisma.category.upsert({
@@ -223,7 +223,7 @@ async function main() {
         descriptionRu: 'XSS, CSRF, CSP, аутентификация',
         descriptionEn: 'XSS, CSRF, CSP, authentication',
         order: 13,
-        isVisible: false,
+        isVisible: true,
       },
     }),
     prisma.category.upsert({

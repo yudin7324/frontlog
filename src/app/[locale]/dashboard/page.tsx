@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { Navbar } from '@/widgets/navbar/ui/navbar';
 import { buttonVariants } from '@/shared/lib/button-variants';
 import Link from 'next/link';
-import { Brain, BookOpen, CheckCircle2 } from 'lucide-react';
+import { Brain, BookOpen, CalendarDays, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { ActivityHeatmap } from '@/widgets/activity-heatmap/ui/activity-heatmap';
 import { Greeting } from '@/widgets/dashboard/ui/greeting';
@@ -70,6 +70,35 @@ export default async function DashboardPage({
             value={data.newCardsCount}
           />
         </div>
+
+        {data.activeStudyPlan && (() => {
+          const currentDay = Math.min(data.activeStudyPlan.currentDay, data.activeStudyPlan.durationDays);
+          const pct = Math.round((currentDay / data.activeStudyPlan.durationDays) * 100);
+          return (
+            <div className="mb-6 rounded-xl border bg-card p-5">
+              <div className="flex items-start justify-between gap-4 mb-3">
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">{t('activePlan')}</p>
+                  <h2 className="text-base font-semibold leading-tight">
+                    {locale === 'ru' ? data.activeStudyPlan.nameRu : data.activeStudyPlan.nameEn}
+                  </h2>
+                </div>
+                <Link href={`/${locale}/settings`} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'shrink-0')}>
+                  {t('changePlan')}
+                </Link>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex-1 bg-secondary rounded-full h-1.5">
+                  <div className="bg-primary h-1.5 rounded-full transition-all" style={{ width: `${pct}%` }} />
+                </div>
+                <span className="text-xs text-muted-foreground whitespace-nowrap flex items-center gap-1 shrink-0">
+                  <CalendarDays className="h-3.5 w-3.5" />
+                  {t('planDay', { current: currentDay, total: data.activeStudyPlan.durationDays })}
+                </span>
+              </div>
+            </div>
+          );
+        })()}
 
         <div className="mb-6">
           <ActivityHeatmap

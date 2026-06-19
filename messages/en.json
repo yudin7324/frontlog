@@ -3,6 +3,7 @@
     "study": "Study",
     "dashboard": "Dashboard",
     "categories": "Topics",
+    "studyPlans": "Plans",
     "signIn": "Sign In",
     "signOut": "Sign Out",
     "settings": "Settings",
@@ -31,6 +32,8 @@
     "intervalError": "Please fill in all fields with valid values",
     "save": "Save",
     "saved": "Saved ✓",
+    "planTitle": "Study Plan",
+    "planDesc": "Choose a study route — FrontLog will focus your sessions on the relevant topics",
     "progressTitle": "Reset Progress",
     "progressDesc": "Reset progress for a topic — cards will return to «New» status",
     "reset": "Reset",
@@ -62,6 +65,16 @@
     "subtitle": "Choose a topic to view all questions",
     "progress": "Progress",
     "open": "Open →"
+  },
+  "studyPlans": {
+    "title": "Study Plans",
+    "subtitle": "Choose a path, and FrontLog will focus your sessions on the right topics.",
+    "days": "days",
+    "categories": "topics",
+    "active": "Active",
+    "start": "Start plan",
+    "switch": "Switch plan",
+    "clear": "Study without a plan"
   },
   "category": {
     "back": "All topics",
@@ -129,7 +142,10 @@
     "streak": "Day Streak",
     "startStudy": "Start Studying",
     "allCaughtUp": "All caught up!",
-    "days": "days"
+    "days": "days",
+    "activePlan": "Current plan",
+    "planDay": "Day {current} of {total}",
+    "changePlan": "Change plan"
   },
   "heatmap": {
     "reviewsInYear": "reviews in the last year",

@@ -7,8 +7,9 @@ import { CheckCircle } from 'lucide-react';
 import { buttonVariants } from '@/shared/lib/button-variants';
 import Link from 'next/link';
 import { cn } from '@/shared/lib/utils';
-import type { Card, Category } from '@prisma/client';
+import type { Card, Category, Prisma } from '@prisma/client';
 import { getTranslations } from 'next-intl/server';
+import { getStudyPlan } from '@/entities/study-plan/model/plans';
 
 type CardWithCategory = Card & { category: Category };
 
@@ -30,7 +31,7 @@ export default async function StudyPage({
   let userSettings: Awaited<ReturnType<typeof prisma.userSettings.findUnique>> = null;
   const isRu = locale === 'ru';
 
-  const categoryFilter = category ? { category: { slug: category } } : {};
+  const categoryFilter: Prisma.CardWhereInput = category ? { category: { slug: category } } : {};
 
   if (category) {
     const cat = await prisma.category.findUnique({
@@ -48,10 +49,13 @@ export default async function StudyPage({
     });
     const dailyReviewsLimit = userSettings?.dailyReviews ?? 50;
     const dailyNewCardsLimit = userSettings?.dailyNewCards ?? 10;
+    const activePlan = getStudyPlan(userSettings?.activeStudyPlanSlug);
+    const planFilter: Prisma.CardWhereInput = activePlan
+      ? { category: { slug: { in: activePlan.categorySlugs } } }
+      : {};
+    const effectiveCategoryFilter = category ? categoryFilter : planFilter;
 
-    const cardWhere = category
-      ? { isPublished: true, category: { slug: category } }
-      : { isPublished: true };
+    const cardWhere: Prisma.CardWhereInput = { isPublished: true, ...effectiveCategoryFilter };
     const progressDue = await prisma.cardProgress.findMany({
       where: {
         userId,
@@ -70,7 +74,7 @@ export default async function StudyPage({
       where: {
         isPublished: true,
         ...(learnedIds.length > 0 ? { id: { notIn: learnedIds } } : {}),
-        ...categoryFilter,
+        ...effectiveCategoryFilter,
       },
       include: { category: true },
       take: dailyNewCardsLimit,

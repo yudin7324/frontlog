@@ -1,5 +1,6 @@
 import { prisma } from '@/shared/lib/prisma';
-import type { Difficulty } from '@prisma/client';
+import { getStudyPlan, getStudyPlanDay } from '@/entities/study-plan/model/plans';
+import type { Difficulty, Prisma } from '@prisma/client';
 import type { CategoryWithCards, CategoryStat, DifficultyStats, DashboardData } from '@/shared/types/db';
 
 export async function getDashboardData(userId: string): Promise<DashboardData> {
@@ -10,15 +11,26 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
 
   const userSettings = await prisma.userSettings.findUnique({
     where: { userId },
-    select: { dailyNewCards: true },
+    select: { dailyNewCards: true, activeStudyPlanSlug: true, studyPlanStartedAt: true },
   });
   const dailyNewCardsLimit = userSettings?.dailyNewCards ?? 10;
+  const activePlan = getStudyPlan(userSettings?.activeStudyPlanSlug);
+  const activePlanCardWhere: Prisma.CardWhereInput = activePlan
+    ? { category: { slug: { in: activePlan.categorySlugs } } }
+    : {};
+  const activePlanCategoryWhere: Prisma.CategoryWhereInput = activePlan
+    ? { slug: { in: activePlan.categorySlugs } }
+    : {};
 
   const [dueCount, totalLearned, rawCategoryStats, activityRaw] = await Promise.all([
-    prisma.cardProgress.count({ where: { userId, dueDate: { lte: now } } }),
-    prisma.cardProgress.count({ where: { userId, repetitions: { gt: 0 } } }),
+    prisma.cardProgress.count({
+      where: { userId, dueDate: { lte: now }, card: { isPublished: true, ...activePlanCardWhere } },
+    }),
+    prisma.cardProgress.count({
+      where: { userId, repetitions: { gt: 0 }, card: { isPublished: true, ...activePlanCardWhere } },
+    }),
     prisma.category.findMany({
-      where: { isVisible: true },
+      where: { isVisible: true, ...activePlanCategoryWhere },
       include: {
         cards: {
           include: { progress: { where: { userId } } },
@@ -43,6 +55,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     prisma.card.count({
       where: {
         isPublished: true,
+        ...activePlanCardWhere,
         ...(learnedCardIds.length > 0 ? { id: { notIn: learnedCardIds } } : {}),
       },
     }),
@@ -102,6 +115,15 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     totalDue,
     totalLearned,
     newCardsCount,
+    activeStudyPlan: activePlan
+      ? {
+          slug: activePlan.slug,
+          nameRu: activePlan.nameRu,
+          nameEn: activePlan.nameEn,
+          durationDays: activePlan.durationDays,
+          currentDay: getStudyPlanDay(userSettings?.studyPlanStartedAt),
+        }
+      : null,
     categoryStats,
     categoryStatsForDisplay,
     heatmapData,

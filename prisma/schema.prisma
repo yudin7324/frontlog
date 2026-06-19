@@ -37,6 +37,8 @@ model UserSettings {
   intervalHard  Int     @default(10)    // Hard: 10 min
   intervalGood  Int     @default(1440)  // Good: 1 day
   intervalEasy  Int     @default(4320)  // Easy: 3 days
+  activeStudyPlanSlug String?
+  studyPlanStartedAt  DateTime?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

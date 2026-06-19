@@ -19,6 +19,8 @@ export async function GET() {
     intervalHard: 10,
     intervalGood: 1440,
     intervalEasy: 4320,
+    activeStudyPlanSlug: null,
+    studyPlanStartedAt: null,
   });
 }
 

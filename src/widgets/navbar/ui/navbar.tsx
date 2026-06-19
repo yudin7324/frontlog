@@ -122,6 +122,17 @@ export function Navbar({ user }: NavbarProps) {
                     {link.label}
                   </Link>
                 ))}
+                {user && (
+                  <>
+                    <div className="border-t my-1" />
+                    <Link
+                      href={`/${locale}/settings`}
+                      className="px-3 py-2 rounded-md text-sm font-medium hover:bg-accent transition-colors"
+                    >
+                      {t('settings')}
+                    </Link>
+                  </>
+                )}
               </nav>
             </SheetContent>
           </Sheet>

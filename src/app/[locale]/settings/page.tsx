@@ -3,10 +3,7 @@ import { redirect } from 'next/navigation';
 import { Navbar } from '@/widgets/navbar/ui/navbar';
 import { prisma } from '@/shared/lib/prisma';
 import { getTranslations } from 'next-intl/server';
-import { IntervalsForm } from '@/features/update-settings/ui/intervals-form';
-import { CategoryResetList } from '@/features/reset-progress/ui/category-reset-list';
-import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
-import { SignOutButton } from '@/features/sign-out/ui/sign-out-button';
+import { SettingsShell } from '@/widgets/settings/ui/settings-shell';
 
 export default async function SettingsPage({
   params,
@@ -52,40 +49,17 @@ export default async function SettingsPage({
     learned: cat.cards.filter((c) => c.progress.some((p) => p.repetitions > 0)).length,
   })).filter((c) => c.total > 0);
 
-  const user = session.user;
-
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar user={user} />
-      <main className="flex-1 container mx-auto max-w-2xl px-4 py-8">
+      <Navbar user={session.user} />
+      <main className="flex-1 container mx-auto max-w-4xl px-4 py-8">
         <h1 className="text-2xl font-bold mb-6">{t('title')}</h1>
-
-        {/* Profile */}
-        <div className="border rounded-xl p-5 mb-4 flex items-center gap-4">
-          <Avatar className="h-14 w-14">
-            <AvatarImage src={user.image ?? ''} alt={user.name ?? ''} />
-            <AvatarFallback className="text-lg">
-              {user.name?.charAt(0).toUpperCase() ?? 'U'}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex-1">
-            <p className="font-semibold">{user.name}</p>
-            <p className="text-sm text-muted-foreground">{user.email}</p>
-          </div>
-          <SignOutButton />
-        </div>
-
-        {/* Intervals & daily limits */}
-        <div className="mb-4">
-          <IntervalsForm initial={settings} />
-        </div>
-
-        {/* Progress reset */}
-        <div className="border rounded-xl p-5">
-          <h2 className="font-semibold mb-1">{t('progressTitle')}</h2>
-          <p className="text-sm text-muted-foreground mb-4">{t('progressDesc')}</p>
-          <CategoryResetList categories={categories} />
-        </div>
+        <SettingsShell
+          user={session.user}
+          settings={settings}
+          activeStudyPlanSlug={userSettings?.activeStudyPlanSlug ?? null}
+          categories={categories}
+        />
       </main>
     </div>
   );

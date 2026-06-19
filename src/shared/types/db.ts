@@ -21,6 +21,13 @@ export interface DashboardData {
   totalDue: number;
   totalLearned: number;
   newCardsCount: number;
+  activeStudyPlan: {
+    slug: string;
+    nameRu: string;
+    nameEn: string;
+    durationDays: number;
+    currentDay: number;
+  } | null;
   categoryStats: CategoryWithCards[];
   categoryStatsForDisplay: CategoryStat[];
   heatmapData: { date: string; count: number }[];

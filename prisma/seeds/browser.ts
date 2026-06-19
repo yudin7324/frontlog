@@ -4,607 +4,253 @@ export const cards: CardSeed[] = [
   {
     id: 'browser-001',
     difficulty: 'MEDIUM',
-    order: 1,
+    questionRu: 'Какие этапы проходит браузер от получения HTML до отображения страницы?',
+    questionEn: 'What stages does the browser go through from receiving HTML to displaying the page?',
+    answerRu: 'Браузер парсит HTML → строит **DOM**.\nВстречает CSS → загружает и строит **CSSOM**.\n**DOM** + **CSSOM** → **Render Tree** (только отображаемые элементы).\n\n- **Layout (Reflow)** — вычисляет размеры и позиции элементов\n- **Paint** — отрисовывает содержимое\n- **Composite** — объединяет слои и выводит страницу на экран\n\n**CSS** блокирует рендеринг страницы.\nСкрипты без `defer`/`async` блокируют парсинг HTML.',
+    answerEn: 'The browser parses HTML → builds the **DOM**.\nEncounters CSS → loads and builds the **CSSOM**.\n**DOM** + **CSSOM** → **Render Tree** (visible elements only).\n\n- **Layout (Reflow)** — calculates element sizes and positions\n- **Paint** — draws the content\n- **Composite** — combines layers and displays the page\n\n**CSS** blocks page rendering.\nScripts without `defer`/`async` block HTML parsing.',
     tags: ['rendering'],
-    questionRu: 'Что происходит когда браузер получает HTML?',
-    questionEn: 'What happens when the browser receives HTML?',
-    answerRu: `Браузер парсит HTML → строит **DOM**.
-
-Встречает CSS → загружает и строит **CSSOM**.
-
-**DOM** + **CSSOM** → **Render Tree** (только видимые элементы).
-
-- **Layout** — вычисляет размеры и позиции
-- **Paint** — рисует пиксели
-- **Composite** — собирает слои
-
-Скрипты без \`defer\`/\`async\` блокируют парсинг HTML.`,
-    answerEn: `The browser parses HTML → builds the **DOM**.
-
-Encounters CSS → loads and builds the **CSSOM**.
-
-**DOM** + **CSSOM** → **Render Tree** (visible elements only).
-
-- **Layout** — calculates sizes and positions
-- **Paint** — draws pixels
-- **Composite** — assembles layers
-
-Scripts without \`defer\`/\`async\` block HTML parsing.`,
+    order: 1,
   },
   {
     id: 'browser-002',
     difficulty: 'EASY',
-    order: 2,
-    tags: ['rendering'],
     questionRu: 'Что такое DOM и CSSOM?',
     questionEn: 'What are the DOM and CSSOM?',
-    answerRu: `**DOM** (Document Object Model) — древовидное представление HTML в памяти, API для JS.
-
-**CSSOM** (CSS Object Model) — аналогичное дерево для CSS со всеми стилями, включая унаследованные.
-
-Браузер не может построить **Render Tree** пока не готовы оба — CSS блокирует рендеринг.`,
-    answerEn: `**DOM** (Document Object Model) — an in-memory tree representation of HTML, used as an API for JS.
-
-**CSSOM** (CSS Object Model) — a similar tree for CSS with all styles including inherited ones.
-
-The browser cannot build the **Render Tree** until both are ready — CSS blocks rendering.`,
+    answerRu: '**DOM** (Document Object Model) — древовидное представление HTML в памяти, API для JS.\n\n**CSSOM** (CSS Object Model) — аналогичное дерево для CSS со всеми стилями, включая унаследованные.\n\nБраузер не может построить **Render Tree** пока не готовы оба — CSS блокирует рендеринг.',
+    answerEn: '**DOM** (Document Object Model) — an in-memory tree representation of HTML, used as an API for JS.\n\n**CSSOM** (CSS Object Model) — a similar tree for CSS with all styles including inherited ones.\n\nThe browser cannot build the **Render Tree** until both are ready — CSS blocks rendering.',
+    tags: ['rendering'],
+    order: 2,
   },
   {
     id: 'browser-003',
     difficulty: 'MEDIUM',
-    order: 3,
-    tags: ['rendering'],
     questionRu: 'Почему CSS блокирует рендеринг, а JS блокирует парсинг?',
     questionEn: 'Why does CSS block rendering while JS blocks parsing?',
-    answerRu: `**CSS блокирует рендеринг**: браузер не строит **Render Tree** без **CSSOM**, чтобы не показывать **FOUC**.
-
-**JS блокирует парсинг**: скрипт может изменить **DOM** и **CSSOM**, поэтому браузер останавливается, загружает и выполняет JS.
-
-\`defer\`/\`async\` снимают блокировку парсинга.`,
-    answerEn: `**CSS blocks rendering**: the browser will not build the **Render Tree** without the **CSSOM**, to avoid showing **FOUC**.
-
-**JS blocks parsing**: a script may modify the **DOM** and **CSSOM**, so the browser stops, downloads, and executes JS.
-
-\`defer\`/\`async\` remove the parsing block.`,
+    answerRu: '**CSS блокирует рендеринг**: браузер не строит **Render Tree** без **CSSOM**, чтобы не показывать **FOUC**.\n\n**JS блокирует парсинг**: скрипт может изменить **DOM** и **CSSOM**, поэтому браузер останавливается, загружает и выполняет JS.\n\n`defer`/`async` снимают блокировку парсинга.',
+    answerEn: '**CSS blocks rendering**: the browser will not build the **Render Tree** without the **CSSOM**, to avoid showing **FOUC**.\n\n**JS blocks parsing**: a script may modify the **DOM** and **CSSOM**, so the browser stops, downloads, and executes JS.\n\n`defer`/`async` remove the parsing block.',
+    tags: ['rendering'],
+    order: 3,
   },
   {
     id: 'browser-004',
     difficulty: 'MEDIUM',
-    order: 4,
-    tags: ['rendering'],
     questionRu: 'Что такое render-blocking ресурсы и как с ними бороться?',
     questionEn: 'What are render-blocking resources and how do you deal with them?',
-    answerRu: `**Render-blocking** ресурсы: CSS в \`<head>\`, синхронный JS.
-
-Решения для CSS:
-- inline **critical CSS**
-- \`media\` queries (print CSS не блокирует)
-
-Для JS:
-- \`defer\`, \`async\`
-- перенос в конец \`body\`
-
-Также: \`preload\` для приоритетных ресурсов, **HTTP/2** для параллельной загрузки.`,
-    answerEn: `**Render-blocking** resources: CSS in \`<head>\`, synchronous JS.
-
-Solutions for CSS:
-- inline **critical CSS**
-- \`media\` queries (print CSS does not block)
-
-For JS:
-- \`defer\`, \`async\`
-- moving to the end of \`body\`
-
-Also: \`preload\` for high-priority resources, **HTTP/2** for parallel loading.`,
+    answerRu: '**Render-blocking** ресурсы: CSS в `<head>`, синхронный JS.\n\nРешения для CSS:\n- inline **critical CSS**\n- `media` queries (print CSS не блокирует)\n\nДля JS:\n- `defer`, `async`\n- перенос в конец `body`\n\nТакже: `preload` для приоритетных ресурсов, **HTTP/2** для параллельной загрузки.',
+    answerEn: '**Render-blocking** resources: CSS in `<head>`, synchronous JS.\n\nSolutions for CSS:\n- inline **critical CSS**\n- `media` queries (print CSS does not block)\n\nFor JS:\n- `defer`, `async`\n- moving to the end of `body`\n\nAlso: `preload` for high-priority resources, **HTTP/2** for parallel loading.',
+    tags: ['rendering'],
+    order: 4,
   },
   {
     id: 'browser-005',
     difficulty: 'MEDIUM',
-    order: 5,
-    tags: ['rendering'],
     questionRu: 'Что такое critical CSS?',
     questionEn: 'What is critical CSS?',
-    answerRu: `**Critical CSS** — минимальный набор стилей для отрисовки видимой части страницы (**above the fold**).
-
-Инлайнится в \`<style>\` в \`<head>\` для мгновенного рендера без ожидания загрузки CSS-файла.
-
-Остальные стили загружаются асинхронно.
-
-Улучшает **FCP** и **LCP**.`,
-    answerEn: `**Critical CSS** — the minimal set of styles needed to render the visible part of the page (**above the fold**).
-
-It is inlined in a \`<style>\` tag in \`<head>\` for instant rendering without waiting for the CSS file to load.
-
-The remaining styles are loaded asynchronously.
-
-Improves **FCP** and **LCP**.`,
+    answerRu: '**Critical CSS** — минимальный набор стилей для отрисовки видимой части страницы (**above the fold**).\n\nИнлайнится в `<style>` в `<head>` для мгновенного рендера без ожидания загрузки CSS-файла.\n\nОстальные стили загружаются асинхронно.\n\nУлучшает **FCP** и **LCP**.',
+    answerEn: '**Critical CSS** — the minimal set of styles needed to render the visible part of the page (**above the fold**).\n\nIt is inlined in a `<style>` tag in `<head>` for instant rendering without waiting for the CSS file to load.\n\nThe remaining styles are loaded asynchronously.\n\nImproves **FCP** and **LCP**.',
+    tags: ['rendering'],
+    order: 5,
+    isPublished: false,
   },
   {
     id: 'browser-006',
     difficulty: 'MEDIUM',
-    order: 6,
-    tags: ['rendering'],
     questionRu: 'Что такое preload, prefetch и preconnect?',
     questionEn: 'What are preload, prefetch, and preconnect?',
-    answerRu: `- \`preload\` (\`<link rel="preload">\`): загрузить ресурс с **высоким приоритетом** для текущей страницы — шрифты, критичные скрипты
-- \`prefetch\`: загрузить с **низким приоритетом** для следующей навигации
-- \`preconnect\`: заранее установить TCP/TLS соединение с доменом
-- \`dns-prefetch\`: только DNS-резолюция`,
-    answerEn: `- \`preload\` (\`<link rel="preload">\`): load a resource with **high priority** for the current page — fonts, critical scripts
-- \`prefetch\`: load with **low priority** for the next navigation
-- \`preconnect\`: establish a TCP/TLS connection to a domain in advance
-- \`dns-prefetch\`: DNS resolution only`,
+    answerRu: '- `preload` (`<link rel="preload">`): загрузить ресурс с **высоким приоритетом** для текущей страницы — шрифты, критичные скрипты\n- `prefetch`: загрузить с **низким приоритетом** для следующей навигации\n- `preconnect`: заранее установить TCP/TLS соединение с доменом\n- `dns-prefetch`: только DNS-резолюция',
+    answerEn: '- `preload` (`<link rel="preload">`): load a resource with **high priority** for the current page — fonts, critical scripts\n- `prefetch`: load with **low priority** for the next navigation\n- `preconnect`: establish a TCP/TLS connection to a domain in advance\n- `dns-prefetch`: DNS resolution only',
+    tags: ['rendering'],
+    order: 6,
   },
   {
     id: 'browser-007',
     difficulty: 'MEDIUM',
-    order: 7,
-    tags: ['rendering'],
     questionRu: 'Что такое Core Web Vitals?',
     questionEn: 'What are Core Web Vitals?',
-    answerRu: `**Core Web Vitals** — метрики Google для оценки UX.
-
-- **LCP** (Largest Contentful Paint): загрузка главного контента, цель < 2.5s
-- **FID** (First Input Delay) / **INP** (Interaction to Next Paint): отзывчивость, цель < 200ms
-- **CLS** (Cumulative Layout Shift): стабильность layout, цель < 0.1
-
-Влияют на поисковый рейтинг.`,
-    answerEn: `**Core Web Vitals** — Google metrics for evaluating UX.
-
-- **LCP** (Largest Contentful Paint): main content load time, target < 2.5s
-- **FID** (First Input Delay) / **INP** (Interaction to Next Paint): responsiveness, target < 200ms
-- **CLS** (Cumulative Layout Shift): layout stability, target < 0.1
-
-They affect search rankings.`,
+    answerRu: '**Core Web Vitals** — метрики Google для оценки пользовательского опыта.\n\n- **LCP** (Largest Contentful Paint): скорость загрузки основного контента, цель ≤ 2.5s\n- **INP** (Interaction to Next Paint): отзывчивость интерфейса на взаимодействия, цель ≤ 200ms\n- **CLS** (Cumulative Layout Shift): визуальная стабильность, цель ≤ 0.1\n\n**FID** раньше входил в Core Web Vitals, но был заменён на **INP**.',
+    answerEn: '**Core Web Vitals** are Google metrics for evaluating user experience.\n\n- **LCP** (Largest Contentful Paint): loading speed of the main content, target ≤ 2.5s\n- **INP** (Interaction to Next Paint): responsiveness to user interactions, target ≤ 200ms\n- **CLS** (Cumulative Layout Shift): visual stability, target ≤ 0.1\n\n**FID** used to be a Core Web Vital, but it was replaced by **INP**.',
+    tags: ['rendering'],
+    order: 7,
   },
   {
     id: 'browser-008',
     difficulty: 'MEDIUM',
-    order: 8,
-    tags: ['reflow'],
     questionRu: 'В чём разница между reflow и repaint?',
     questionEn: 'What is the difference between reflow and repaint?',
-    answerRu: `**Reflow** (layout): пересчёт геометрии элементов — размеров и позиций. Дорогая операция, затрагивает соседей и родителей.
-
-Триггеры reflow: изменение \`width\`, \`height\`, \`margin\`, \`font-size\`, добавление/удаление элементов.
-
-**Repaint**: перерисовка пикселей без изменения геометрии.
-
-Триггеры repaint: \`color\`, \`background\`, \`visibility\`.
-
-**Reflow** всегда вызывает **repaint**.`,
-    answerEn: `**Reflow** (layout): recalculates element geometry — sizes and positions. An expensive operation that affects siblings and parents.
-
-Reflow triggers: changing \`width\`, \`height\`, \`margin\`, \`font-size\`, adding/removing elements.
-
-**Repaint**: redraws pixels without changing geometry.
-
-Repaint triggers: \`color\`, \`background\`, \`visibility\`.
-
-**Reflow** always causes a **repaint**.`,
+    answerRu: '**Reflow** (layout): пересчёт геометрии элементов — размеров и позиций. Дорогая операция, затрагивает соседей и родителей.\n\nТриггеры reflow: изменение `width`, `height`, `margin`, `font-size`, добавление/удаление элементов.\n\n**Repaint**: перерисовка пикселей без изменения геометрии.\n\nТриггеры repaint: `color`, `background`, `visibility`.\n\n**Reflow** всегда вызывает **repaint**.',
+    answerEn: '**Reflow** (layout): recalculates element geometry — sizes and positions. An expensive operation that affects siblings and parents.\n\nReflow triggers: changing `width`, `height`, `margin`, `font-size`, adding/removing elements.\n\n**Repaint**: redraws pixels without changing geometry.\n\nRepaint triggers: `color`, `background`, `visibility`.\n\n**Reflow** always causes a **repaint**.',
+    tags: ['reflow'],
+    order: 8,
   },
   {
     id: 'browser-009',
     difficulty: 'HARD',
-    order: 9,
-    tags: ['reflow'],
     questionRu: 'Что такое композитинг (compositing)?',
     questionEn: 'What is compositing?',
-    answerRu: `**Compositing** — финальный этап: браузер собирает **слои** (layers) в итоговое изображение на GPU.
-
-Элементы, выносимые в отдельный compositor layer:
-- \`transform\`
-- \`opacity\`
-- \`will-change\`
-- \`video\`, \`canvas\`
-
-Анимации \`transform\`/\`opacity\` происходят только на этапе compositing — не вызывают **reflow**/**repaint**.`,
-    answerEn: `**Compositing** — the final stage: the browser assembles **layers** into the final image on the GPU.
-
-Elements promoted to their own compositor layer:
-- \`transform\`
-- \`opacity\`
-- \`will-change\`
-- \`video\`, \`canvas\`
-
-Animations of \`transform\`/\`opacity\` happen only at the compositing stage — they do not trigger **reflow** or **repaint**.`,
+    answerRu: '**Compositing** — финальный этап: браузер собирает **слои** (layers) в итоговое изображение на GPU.\n\nЭлементы, выносимые в отдельный compositor layer:\n- `transform`\n- `opacity`\n- `will-change`\n- `video`, `canvas`\n\nАнимации `transform`/`opacity` происходят только на этапе compositing — не вызывают **reflow**/**repaint**.',
+    answerEn: '**Compositing** — the final stage: the browser assembles **layers** into the final image on the GPU.\n\nElements promoted to their own compositor layer:\n- `transform`\n- `opacity`\n- `will-change`\n- `video`, `canvas`\n\nAnimations of `transform`/`opacity` happen only at the compositing stage — they do not trigger **reflow** or **repaint**.',
+    tags: ['reflow'],
+    order: 9,
   },
   {
     id: 'browser-010',
     difficulty: 'MEDIUM',
-    order: 10,
-    tags: ['reflow'],
     questionRu: 'Как минимизировать reflow?',
     questionEn: 'How do you minimize reflow?',
-    answerRu: `- Батчить DOM-изменения: читать геометрию отдельно от записи (избегать **layout thrashing**)
-- Использовать \`DocumentFragment\`
-- Скрывать элемент через \`display:none\` перед множественными изменениями
-- Использовать \`transform\` вместо \`top\`/\`left\`
-- \`requestAnimationFrame\` для визуальных изменений
-- Избегать чтение \`offsetWidth\` в цикле`,
-    answerEn: `- Batch DOM changes: separate reads from writes (avoid **layout thrashing**)
-- Use \`DocumentFragment\`
-- Hide the element with \`display:none\` before making multiple changes
-- Use \`transform\` instead of \`top\`/\`left\`
-- Use \`requestAnimationFrame\` for visual changes
-- Avoid reading \`offsetWidth\` inside a loop`,
+    answerRu: '- Батчить DOM-изменения: читать геометрию отдельно от записи (избегать **layout thrashing**)\n- Использовать `DocumentFragment`\n- Скрывать элемент через `display:none` перед множественными изменениями\n- Использовать `transform` вместо `top`/`left`\n- `requestAnimationFrame` для визуальных изменений\n- Избегать чтение `offsetWidth` в цикле',
+    answerEn: '- Batch DOM changes: separate reads from writes (avoid **layout thrashing**)\n- Use `DocumentFragment`\n- Hide the element with `display:none` before making multiple changes\n- Use `transform` instead of `top`/`left`\n- Use `requestAnimationFrame` for visual changes\n- Avoid reading `offsetWidth` inside a loop',
+    tags: ['reflow'],
+    order: 10,
   },
   {
     id: 'browser-011',
     difficulty: 'HARD',
-    order: 11,
-    tags: ['reflow'],
     questionRu: 'Что такое layout thrashing?',
     questionEn: 'What is layout thrashing?',
-    answerRu: `**Layout thrashing** — чередование чтения и записи DOM-геометрии в цикле.
-
-Пример: \`el.style.width = el.offsetWidth + 'px'\` в цикле заставляет браузер делать **reflow** на каждой итерации.
-
-**Решение**: сначала прочитать все значения, потом записать все изменения.
-
-Библиотека **FastDOM** помогает батчить операции.`,
-    answerEn: `**Layout thrashing** — alternating reads and writes of DOM geometry in a loop.
-
-Example: \`el.style.width = el.offsetWidth + 'px'\` inside a loop forces the browser to **reflow** on every iteration.
-
-**Solution**: read all values first, then write all changes.
-
-The **FastDOM** library helps batch these operations.`,
+    answerRu: '**Layout thrashing** — чередование чтения и записи DOM-геометрии в цикле.\n\nПример: `el.style.width = el.offsetWidth + \'px\'` в цикле заставляет браузер делать **reflow** на каждой итерации.\n\n**Решение**: сначала прочитать все значения, потом записать все изменения.\n\nБиблиотека **FastDOM** помогает батчить операции.',
+    answerEn: '**Layout thrashing** — alternating reads and writes of DOM geometry in a loop.\n\nExample: `el.style.width = el.offsetWidth + \'px\'` inside a loop forces the browser to **reflow** on every iteration.\n\n**Solution**: read all values first, then write all changes.\n\nThe **FastDOM** library helps batch these operations.',
+    tags: ['reflow'],
+    order: 11,
   },
   {
     id: 'browser-012',
     difficulty: 'HARD',
-    order: 12,
-    tags: ['reflow'],
     questionRu: 'Что такое paint flashing и как его обнаружить?',
     questionEn: 'What is paint flashing and how do you detect it?',
-    answerRu: `**Paint flashing** — визуальная индикация областей, которые браузер перерисовывает.
-
-Включается в **Chrome DevTools**: Rendering → Paint flashing.
-
-Зелёные вспышки = **repaint**.
-
-Частые перерисовки больших областей — признак проблемы с производительностью.
-
-Цель: минимизировать перерисовываемые области.`,
-    answerEn: `**Paint flashing** — a visual indicator of the areas the browser is repainting.
-
-Enabled in **Chrome DevTools**: Rendering → Paint flashing.
-
-Green flashes = **repaint**.
-
-Frequent repaints of large areas indicate a performance problem.
-
-The goal is to minimize the repainted areas.`,
+    answerRu: '**Paint flashing** — визуальная индикация областей, которые браузер перерисовывает.\n\nВключается в **Chrome DevTools**: Rendering → Paint flashing.\n\nЗелёные вспышки = **repaint**.\n\nЧастые перерисовки больших областей — признак проблемы с производительностью.\n\nЦель: минимизировать перерисовываемые области.',
+    answerEn: '**Paint flashing** — a visual indicator of the areas the browser is repainting.\n\nEnabled in **Chrome DevTools**: Rendering → Paint flashing.\n\nGreen flashes = **repaint**.\n\nFrequent repaints of large areas indicate a performance problem.\n\nThe goal is to minimize the repainted areas.',
+    tags: ['reflow'],
+    order: 12,
+    isPublished: false,
   },
   {
     id: 'browser-013',
     difficulty: 'MEDIUM',
-    order: 13,
-    tags: ['reflow'],
     questionRu: 'Как работает requestAnimationFrame?',
     questionEn: 'How does requestAnimationFrame work?',
-    answerRu: `\`requestAnimationFrame(callback)\` вызывает callback перед следующим рендером браузера (~60fps).
-
-Синхронизирован с частотой обновления дисплея.
-
-Преимущества над \`setTimeout\`:
-- не вызывается в фоновых вкладках (экономит CPU)
-- точно приурочен к циклу рендера
-- автоматически батчит визуальные обновления`,
-    answerEn: `\`requestAnimationFrame(callback)\` calls the callback just before the next browser render (~60fps).
-
-Synchronized with the display refresh rate.
-
-Advantages over \`setTimeout\`:
-- not called in background tabs (saves CPU)
-- precisely timed to the render cycle
-- automatically batches visual updates`,
+    answerRu: '`requestAnimationFrame(callback)` вызывает callback перед следующим рендером браузера (~60fps).\n\nСинхронизирован с частотой обновления дисплея.\n\nПреимущества над `setTimeout`:\n- не вызывается в фоновых вкладках (экономит CPU)\n- точно приурочен к циклу рендера\n- автоматически батчит визуальные обновления',
+    answerEn: '`requestAnimationFrame(callback)` calls the callback just before the next browser render (~60fps).\n\nSynchronized with the display refresh rate.\n\nAdvantages over `setTimeout`:\n- not called in background tabs (saves CPU)\n- precisely timed to the render cycle\n- automatically batches visual updates',
+    tags: ['reflow'],
+    order: 13,
   },
   {
     id: 'browser-014',
     difficulty: 'MEDIUM',
-    order: 14,
-    tags: ['web-apis'],
     questionRu: 'Что такое IntersectionObserver и как использовать?',
     questionEn: 'What is IntersectionObserver and how do you use it?',
-    answerRu: `\`IntersectionObserver\` отслеживает пересечение элемента с viewport или другим элементом.
-
-\`new IntersectionObserver(callback, { threshold: 0.5 })\` — вызов при 50% видимости.
-
-Применения:
-- ленивая загрузка изображений
-- бесконечный скролл
-- анимации при появлении
-
-Эффективнее \`scroll\`-событий — не блокирует **main thread**.`,
-    answerEn: `\`IntersectionObserver\` tracks the intersection of an element with the viewport or another element.
-
-\`new IntersectionObserver(callback, { threshold: 0.5 })\` — fires at 50% visibility.
-
-Use cases:
-- lazy loading images
-- infinite scroll
-- entrance animations
-
-More efficient than \`scroll\` events — does not block the **main thread**.`,
+    answerRu: '`IntersectionObserver` отслеживает пересечение элемента с viewport или другим элементом.\n\n`new IntersectionObserver(callback, { threshold: 0.5 })` — вызов при 50% видимости.\n\nПрименения:\n- ленивая загрузка изображений\n- бесконечный скролл\n- анимации при появлении\n\nЭффективнее `scroll`-событий — не блокирует **main thread**.',
+    answerEn: '`IntersectionObserver` tracks the intersection of an element with the viewport or another element.\n\n`new IntersectionObserver(callback, { threshold: 0.5 })` — fires at 50% visibility.\n\nUse cases:\n- lazy loading images\n- infinite scroll\n- entrance animations\n\nMore efficient than `scroll` events — does not block the **main thread**.',
+    tags: ['web-apis'],
+    order: 14,
   },
   {
     id: 'browser-015',
     difficulty: 'MEDIUM',
-    order: 15,
-    tags: ['web-apis'],
     questionRu: 'Что такое MutationObserver?',
     questionEn: 'What is MutationObserver?',
-    answerRu: `\`MutationObserver\` отслеживает изменения в DOM-дереве: добавление/удаление узлов, изменения атрибутов и текста.
-
-Асинхронный — использует **микрозадачи**, не блокирует.
-
-Применения:
-- отслеживание изменений сторонних скриптов
-- полифилы
-- автоматизация
-
-Эффективнее устаревших **mutation events**.`,
-    answerEn: `\`MutationObserver\` tracks changes in the DOM tree: node additions/removals, attribute and text changes.
-
-Asynchronous — uses **microtasks**, does not block.
-
-Use cases:
-- monitoring third-party script changes
-- polyfills
-- automation
-
-More efficient than the deprecated **mutation events**.`,
+    answerRu: '`MutationObserver` отслеживает изменения в DOM-дереве: добавление/удаление узлов, изменения атрибутов и текста.\n\nАсинхронный — использует **микрозадачи**, не блокирует.\n\nПрименения:\n- отслеживание изменений сторонних скриптов\n- полифилы\n- автоматизация\n\nЭффективнее устаревших **mutation events**.',
+    answerEn: '`MutationObserver` tracks changes in the DOM tree: node additions/removals, attribute and text changes.\n\nAsynchronous — uses **microtasks**, does not block.\n\nUse cases:\n- monitoring third-party script changes\n- polyfills\n- automation\n\nMore efficient than the deprecated **mutation events**.',
+    tags: ['web-apis'],
+    order: 15,
   },
   {
     id: 'browser-016',
     difficulty: 'MEDIUM',
-    order: 16,
-    tags: ['web-apis'],
     questionRu: 'Что такое ResizeObserver?',
     questionEn: 'What is ResizeObserver?',
-    answerRu: `\`ResizeObserver\` отслеживает изменения размеров элемента.
-
-В отличие от \`window resize\` event — работает для любого элемента, не только окна.
-
-Применения:
-- адаптивные компоненты (container queries вручную)
-- \`canvas\` с динамическим размером
-- виртуализация
-
-Не вызывает **reflow** при чтении размеров.`,
-    answerEn: `\`ResizeObserver\` tracks size changes of an element.
-
-Unlike the \`window resize\` event — it works for any element, not just the window.
-
-Use cases:
-- responsive components (manual container queries)
-- dynamically sized \`canvas\`
-- virtualization
-
-Does not trigger **reflow** when reading sizes.`,
+    answerRu: '`ResizeObserver` отслеживает изменения размеров элемента: content box, border box или SVG bounding box.\n\nВ отличие от `window resize` event — работает для любого элемента, не только окна.\n\nПрименения:\n- адаптивные компоненты\n- `canvas` с динамическим размером\n- виртуализация\n\nПомогает реагировать на изменение размеров без polling и ручного чтения layout-метрик вроде `offsetWidth` в цикле.',
+    answerEn: '`ResizeObserver` tracks size changes of an element: content box, border box, or SVG bounding box.\n\nUnlike the `window resize` event — it works for any element, not just the window.\n\nUse cases:\n- responsive components\n- dynamically sized `canvas`\n- virtualization\n\nIt helps react to size changes without polling or manually reading layout metrics like `offsetWidth` in a loop.',
+    tags: ['web-apis'],
+    order: 16,
   },
   {
     id: 'browser-017',
     difficulty: 'MEDIUM',
-    order: 17,
-    tags: ['web-apis'],
     questionRu: 'Что такое Web Workers и когда использовать?',
     questionEn: 'What are Web Workers and when should you use them?',
-    answerRu: `**Web Workers** — отдельные потоки для тяжёлых вычислений без блокировки **main thread**.
-
-Общение через \`postMessage\`/\`onmessage\`. Нет доступа к **DOM**.
-
-Типы:
-- **Dedicated Worker** — один потребитель
-- **Shared Worker** — несколько вкладок
-- **Service Worker** — перехват сетевых запросов
-
-Для: парсинга, шифрования, обработки данных.`,
-    answerEn: `**Web Workers** — separate threads for heavy computations without blocking the **main thread**.
-
-Communication via \`postMessage\`/\`onmessage\`. No **DOM** access.
-
-Types:
-- **Dedicated Worker** — single consumer
-- **Shared Worker** — multiple tabs
-- **Service Worker** — network request interception
-
-Use for: parsing, encryption, data processing.`,
+    answerRu: '**Web Workers** — отдельные потоки для тяжёлых вычислений без блокировки **main thread**.\n\nОбщение через `postMessage`/`onmessage`. Нет доступа к **DOM**.\n\nТипы:\n- **Dedicated Worker** — один потребитель\n- **Shared Worker** — несколько вкладок\n- **Service Worker** — перехват сетевых запросов\n\nДля: парсинга, шифрования, обработки данных.',
+    answerEn: '**Web Workers** — separate threads for heavy computations without blocking the **main thread**.\n\nCommunication via `postMessage`/`onmessage`. No **DOM** access.\n\nTypes:\n- **Dedicated Worker** — single consumer\n- **Shared Worker** — multiple tabs\n- **Service Worker** — network request interception\n\nUse for: parsing, encryption, data processing.',
+    tags: ['web-apis'],
+    order: 17,
   },
   {
     id: 'browser-018',
     difficulty: 'MEDIUM',
-    order: 18,
-    tags: ['web-apis'],
     questionRu: 'Что такое Service Worker?',
     questionEn: 'What is a Service Worker?',
-    answerRu: `**Service Worker** — скрипт в фоновом потоке, перехватывающий сетевые запросы. Основа **PWA**.
-
-Возможности:
-- офлайн-работа через **Cache API**
-- push-уведомления
-- фоновая синхронизация
-
-Жизненный цикл: \`install\` → \`activate\` → \`fetch\`.
-
-Работает только по **HTTPS** (кроме \`localhost\`).`,
-    answerEn: `A **Service Worker** is a script running in a background thread that intercepts network requests. It is the foundation of **PWAs**.
-
-Capabilities:
-- offline support via **Cache API**
-- push notifications
-- background sync
-
-Lifecycle: \`install\` → \`activate\` → \`fetch\`.
-
-Works only over **HTTPS** (except \`localhost\`).`,
+    answerRu: '**Service Worker** — скрипт в фоновом потоке, перехватывающий сетевые запросы. Основа **PWA**.\n\nВозможности:\n- офлайн-работа через **Cache API**\n- push-уведомления\n- фоновая синхронизация\n\nЖизненный цикл: `install` → `activate` → `fetch`.\n\nРаботает только по **HTTPS** (кроме `localhost`).',
+    answerEn: 'A **Service Worker** is a script running in a background thread that intercepts network requests. It is the foundation of **PWAs**.\n\nCapabilities:\n- offline support via **Cache API**\n- push notifications\n- background sync\n\nLifecycle: `install` → `activate` → `fetch`.\n\nWorks only over **HTTPS** (except `localhost`).',
+    tags: ['web-apis'],
+    order: 18,
   },
   {
     id: 'browser-019',
     difficulty: 'MEDIUM',
-    order: 19,
-    tags: ['web-apis'],
     questionRu: 'Что такое WebSocket и когда использовать?',
     questionEn: 'What is WebSocket and when should you use it?',
-    answerRu: `**WebSocket** — протокол для двусторонней связи клиент-сервер в реальном времени по одному соединению.
-
-В отличие от HTTP: сервер может инициировать отправку данных.
-
-Применения:
-- чат
-- live-обновления
-- онлайн-игры
-- совместное редактирование
-
-Альтернативы: **SSE** (только сервер → клиент), **long polling**.`,
-    answerEn: `**WebSocket** — a protocol for real-time bidirectional client-server communication over a single connection.
-
-Unlike HTTP: the server can initiate data delivery.
-
-Use cases:
-- chat
-- live updates
-- online games
-- collaborative editing
-
-Alternatives: **SSE** (server → client only), **long polling**.`,
+    answerRu: '**WebSocket** — протокол для двусторонней связи клиент-сервер в реальном времени по одному соединению.\n\nВ отличие от HTTP: сервер может инициировать отправку данных.\n\nПрименения:\n- чат\n- live-обновления\n- онлайн-игры\n- совместное редактирование\n\nАльтернативы: **SSE** (только сервер → клиент), **long polling**.',
+    answerEn: '**WebSocket** — a protocol for real-time bidirectional client-server communication over a single connection.\n\nUnlike HTTP: the server can initiate data delivery.\n\nUse cases:\n- chat\n- live updates\n- online games\n- collaborative editing\n\nAlternatives: **SSE** (server → client only), **long polling**.',
+    tags: ['web-apis'],
+    order: 19,
   },
   {
     id: 'browser-020',
     difficulty: 'MEDIUM',
-    order: 20,
-    tags: ['web-apis'],
     questionRu: 'Что такое History API и как работает SPA-роутинг?',
     questionEn: 'What is the History API and how does SPA routing work?',
-    answerRu: `**History API**: \`pushState\`, \`replaceState\` — изменяют URL без перезагрузки страницы.
-
-Событие \`popstate\` — при нажатии назад/вперёд.
-
-**SPA-роутинг**: перехватывает клики по ссылкам, вызывает \`pushState\`, рендерит нужный компонент.
-
-Сервер должен отдавать \`index.html\` для всех маршрутов.`,
-    answerEn: `**History API**: \`pushState\`, \`replaceState\` — change the URL without reloading the page.
-
-The \`popstate\` event fires on back/forward navigation.
-
-**SPA routing**: intercepts link clicks, calls \`pushState\`, renders the appropriate component.
-
-The server must serve \`index.html\` for all routes.`,
+    answerRu: '**History API**: `pushState`, `replaceState` — изменяют URL без перезагрузки страницы.\n\nСобытие `popstate` — при нажатии назад/вперёд.\n\n**SPA-роутинг**: перехватывает клики по ссылкам, вызывает `pushState`, рендерит нужный компонент.\n\nСервер должен отдавать `index.html` для всех маршрутов.',
+    answerEn: '**History API**: `pushState`, `replaceState` — change the URL without reloading the page.\n\nThe `popstate` event fires on back/forward navigation.\n\n**SPA routing**: intercepts link clicks, calls `pushState`, renders the appropriate component.\n\nThe server must serve `index.html` for all routes.',
+    tags: ['web-apis'],
+    order: 20,
   },
   {
     id: 'browser-021',
     difficulty: 'EASY',
-    order: 21,
-    tags: ['storage'],
     questionRu: 'В чём разница между localStorage, sessionStorage и cookies?',
     questionEn: 'What is the difference between localStorage, sessionStorage, and cookies?',
-    answerRu: `- \`localStorage\`: до 5–10MB, постоянное, только клиент, один origin
-- \`sessionStorage\`: то же, но очищается при закрытии вкладки
-- **Cookies**: до 4KB, отправляются с каждым запросом на сервер, управляются сервером, поддерживают \`httpOnly\`/\`secure\`/\`SameSite\`
-
-Для сессий и авторизации — **cookies**. Для UI-настроек — \`localStorage\`.`,
-    answerEn: `- \`localStorage\`: up to 5–10MB, persistent, client-only, same origin
-- \`sessionStorage\`: the same, but cleared when the tab is closed
-- **Cookies**: up to 4KB, sent with every request to the server, managed by the server, support \`httpOnly\`/\`secure\`/\`SameSite\`
-
-Use **cookies** for sessions and auth. Use \`localStorage\` for UI preferences.`,
+    answerRu: '- `localStorage`: до 5–10MB, постоянное, только клиент, один origin\n- `sessionStorage`: то же, но очищается при закрытии вкладки\n- **Cookies**: до 4KB, отправляются с каждым запросом на сервер, управляются сервером, поддерживают `httpOnly`/`secure`/`SameSite`\n\nДля сессий и авторизации — **cookies**. Для UI-настроек — `localStorage`.',
+    answerEn: '- `localStorage`: up to 5–10MB, persistent, client-only, same origin\n- `sessionStorage`: the same, but cleared when the tab is closed\n- **Cookies**: up to 4KB, sent with every request to the server, managed by the server, support `httpOnly`/`secure`/`SameSite`\n\nUse **cookies** for sessions and auth. Use `localStorage` for UI preferences.',
+    tags: ['storage'],
+    order: 21,
   },
   {
     id: 'browser-022',
     difficulty: 'MEDIUM',
-    order: 22,
-    tags: ['storage'],
     questionRu: 'Что такое IndexedDB?',
     questionEn: 'What is IndexedDB?',
-    answerRu: `**IndexedDB** — низкоуровневая **NoSQL** база данных в браузере.
-
-Хранит большие объёмы структурированных данных (сотни MB), поддерживает транзакции, индексы, бинарные данные.
-
-Асинхронный API. Используется в **PWA** для офлайн-данных.
-
-Обёртки для удобства: \`idb\`, \`Dexie.js\`.`,
-    answerEn: `**IndexedDB** — a low-level **NoSQL** database in the browser.
-
-Stores large amounts of structured data (hundreds of MB), supports transactions, indexes, and binary data.
-
-Asynchronous API. Used in **PWAs** for offline data.
-
-Convenience wrappers: \`idb\`, \`Dexie.js\`.`,
+    answerRu: '**IndexedDB** — низкоуровневая **NoSQL** база данных в браузере.\n\nХранит большие объёмы структурированных данных (сотни MB), поддерживает транзакции, индексы, бинарные данные.\n\nАсинхронный API. Используется в **PWA** для офлайн-данных.\n\nОбёртки для удобства: `idb`, `Dexie.js`.',
+    answerEn: '**IndexedDB** — a low-level **NoSQL** database in the browser.\n\nStores large amounts of structured data (hundreds of MB), supports transactions, indexes, and binary data.\n\nAsynchronous API. Used in **PWAs** for offline data.\n\nConvenience wrappers: `idb`, `Dexie.js`.',
+    tags: ['storage'],
+    order: 22,
   },
   {
     id: 'browser-023',
     difficulty: 'MEDIUM',
-    order: 23,
-    tags: ['storage'],
     questionRu: 'Как работает HTTP-кеширование?',
     questionEn: 'How does HTTP caching work?',
-    answerRu: `- \`Cache-Control: max-age=3600\` — кешировать на 1 час
-- \`no-cache\` — всегда валидировать с сервером
-- \`no-store\` — не кешировать
-
-**Условные запросы**: \`ETag\` и \`Last-Modified\` — браузер отправляет \`If-None-Match\`, сервер отвечает \`304 Not Modified\` если не изменилось.
-
-\`immutable\` — для неизменяемых ресурсов.`,
-    answerEn: `- \`Cache-Control: max-age=3600\` — cache for 1 hour
-- \`no-cache\` — always revalidate with the server
-- \`no-store\` — do not cache
-
-**Conditional requests**: \`ETag\` and \`Last-Modified\` — the browser sends \`If-None-Match\`, the server responds with \`304 Not Modified\` if unchanged.
-
-\`immutable\` — for versioned/unchanging resources.`,
+    answerRu: '- `Cache-Control: max-age=3600` — кешировать на 1 час\n- `no-cache` — всегда валидировать с сервером\n- `no-store` — не кешировать\n\n**Условные запросы**: `ETag` и `Last-Modified` — браузер отправляет `If-None-Match`, сервер отвечает `304 Not Modified` если не изменилось.\n\n`immutable` — для неизменяемых ресурсов.',
+    answerEn: '- `Cache-Control: max-age=3600` — cache for 1 hour\n- `no-cache` — always revalidate with the server\n- `no-store` — do not cache\n\n**Conditional requests**: `ETag` and `Last-Modified` — the browser sends `If-None-Match`, the server responds with `304 Not Modified` if unchanged.\n\n`immutable` — for versioned/unchanging resources.',
+    tags: ['storage'],
+    order: 23,
   },
   {
     id: 'browser-024',
     difficulty: 'HARD',
-    order: 24,
-    tags: ['storage'],
     questionRu: 'Что такое Cache API и как использовать с Service Worker?',
     questionEn: 'What is the Cache API and how do you use it with a Service Worker?',
-    answerRu: `**Cache API** — хранилище пар запрос/ответ для офлайн-работы.
-
-Используется в **Service Worker**: \`cache.put(request, response)\`, \`cache.match(request)\`.
-
-Стратегии:
-- **Cache First** — офлайн
-- **Network First** — актуальность
-- **Stale While Revalidate** — скорость + свежесть
-
-**Workbox** автоматизирует стратегии.`,
-    answerEn: `**Cache API** — a store of request/response pairs for offline support.
-
-Used in a **Service Worker**: \`cache.put(request, response)\`, \`cache.match(request)\`.
-
-Strategies:
-- **Cache First** — offline
-- **Network First** — freshness
-- **Stale While Revalidate** — speed + freshness
-
-**Workbox** automates these strategies.`,
+    answerRu: '**Cache API** — хранилище пар запрос/ответ для офлайн-работы.\n\nИспользуется в **Service Worker**: `cache.put(request, response)`, `cache.match(request)`.\n\nСтратегии:\n- **Cache First** — офлайн\n- **Network First** — актуальность\n- **Stale While Revalidate** — скорость + свежесть\n\n**Workbox** автоматизирует стратегии.',
+    answerEn: '**Cache API** — a store of request/response pairs for offline support.\n\nUsed in a **Service Worker**: `cache.put(request, response)`, `cache.match(request)`.\n\nStrategies:\n- **Cache First** — offline\n- **Network First** — freshness\n- **Stale While Revalidate** — speed + freshness\n\n**Workbox** automates these strategies.',
+    tags: ['storage'],
+    order: 24,
   },
   {
     id: 'browser-025',
     difficulty: 'HARD',
-    order: 25,
-    tags: ['storage'],
     questionRu: 'Что такое мемоизация на уровне браузера (bfcache)?',
     questionEn: 'What is the browser-level back/forward cache (bfcache)?',
-    answerRu: `**bfcache** (back/forward cache) — браузер сохраняет полный снимок страницы в памяти при навигации. При нажатии назад — мгновенное восстановление без повторной загрузки.
-
-Страница не подходит для **bfcache** если:
-- открытое **WebSocket**-соединение
-- \`Cache-Control: no-store\`
-- обработчик \`unload\`
-
-Проверка в **DevTools** → Application.`,
-    answerEn: `**bfcache** (back/forward cache) — the browser saves a full snapshot of the page in memory during navigation. Pressing back instantly restores it without a reload.
-
-A page is ineligible for **bfcache** if:
-- it has an open **WebSocket** connection
-- \`Cache-Control: no-store\`
-- an \`unload\` event handler
-
-Inspect eligibility in **DevTools** → Application.`,
+    answerRu: '**bfcache** (back/forward cache) — браузер сохраняет полный снимок страницы в памяти при навигации. При нажатии назад — мгновенное восстановление без повторной загрузки.\n\nСтраница не подходит для **bfcache** если:\n- открытое **WebSocket**-соединение\n- `Cache-Control: no-store`\n- обработчик `unload`\n\nПроверка в **DevTools** → Application.',
+    answerEn: '**bfcache** (back/forward cache) — the browser saves a full snapshot of the page in memory during navigation. Pressing back instantly restores it without a reload.\n\nA page is ineligible for **bfcache** if:\n- it has an open **WebSocket** connection\n- `Cache-Control: no-store`\n- an `unload` event handler\n\nInspect eligibility in **DevTools** → Application.',
+    tags: ['storage'],
+    order: 25,
   },
 ];
